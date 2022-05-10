@@ -1,22 +1,65 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '/login',
+    name: 'Login',
+    component: () => import('../admin/Login'),
+    meta: { title: '登录' }
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('../admin/Admin'),
+    meta: { title: '后台管理' },
+    children: [
+      {
+        path: 'write',
+        name: 'BlogWrite',
+        component: () => import('../admin/BlogEdit'),
+        meta: { title: '写博客' }
+      },
+      {
+        path: 'edit/:blogId',
+        name: 'BlogEdit',
+        meta: { title: '编辑博客' },
+        component: () => import('../admin/BlogEdit')
+      },
+      {
+        path: 'article',
+        name: 'BlogList',
+        component: () => import('../admin/BlogList'),
+        meta: { title: '文章管理' }
+      },
+      {
+        path: 'category',
+        component: () => import('../admin/CategoryList'),
+        meta: { title: '分类管理' }
+      },
+      {
+        path: 'tag',
+        component: () => import('../admin/TagList'),
+        meta: { title: '标签管理' }
+      },
+      {
+        path: 'comments',
+        component: () => import('../admin/CommentList'),
+        meta: { title: '评论管理' }
+      },
+      {
+        path: 'userManager',
+        component: () => import('../admin/UserList'),
+        meta: { title: '用户管理' }
+      },
+    ]
+  },
+  {
+    path: '/',
+    name: 'home',
+    component: () => import('../views/Home')
   }
 ]
 
