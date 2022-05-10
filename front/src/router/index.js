@@ -50,9 +50,19 @@ const routes = [
         meta: { title: '评论管理' }
       },
       {
+        path: 'about',
+        component: () => import('../admin/About'),
+        meta: {title: '关于我'}
+      },
+      {
         path: 'userManager',
-        component: () => import('../admin/UserList'),
+        component: () => import('../admin/UserManager'),
         meta: { title: '用户管理' }
+      },
+      {
+        path: 'visitLog',
+        component: () => import('../admin/VisitLog'),
+        meta: { title: '访问日志' }
       },
     ]
   },
