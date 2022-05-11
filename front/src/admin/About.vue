@@ -22,6 +22,7 @@
         data() {
             return {
                 form: {
+                    id: 1,
                     title: '',
                     content: '',
                 },
@@ -35,8 +36,21 @@
         },
         methods: {
             getData() {
+                this.$axios.get("/admin/about").then(res => {
+                    this.form.title = res.data.data.title;
+                    this.form.content = res.data.data.content;
+                });
             },
             submit() {
+                this.$refs.formRef.validate(valid => {
+                    if (valid) {
+                        this.$axios.put("/admin/about", this.form).then(res => {
+                            this.$message.success(res.data.msg);
+                        });
+                    } else {
+                        return this.$message.error("请填写必要的表单！");
+                    }
+                })
             }
         }
     }
