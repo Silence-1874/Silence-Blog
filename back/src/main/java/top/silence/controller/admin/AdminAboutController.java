@@ -16,13 +16,13 @@ public class AdminAboutController {
     @GetMapping("/about")
     private Result getAbout() {
         AboutDO about = aboutService.getById(1);
-        return Result.ok(about);
+        return Result.ok("'关于我'请求成功", about);
     }
 
     @PutMapping("/about")
     private Result updateAbout(@RequestBody AboutDO about) {
         aboutService.updateById(about);
-        return Result.ok(about);
+        return Result.ok("'关于我'修改成功", about);
     }
 
 }

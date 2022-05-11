@@ -26,12 +26,12 @@ public class Result {
         this.data = data;
     }
 
-    public static Result ok() {
-        return new Result(true, "请求成功");
+    public static Result ok(String msg) {
+        return new Result(true, msg);
     }
 
-    public static Result ok(Object data) {
-        return new Result(true, "请求成功", data);
+    public static Result ok(String msg, Object data) {
+        return new Result(true, msg, data);
     }
 
     public static Result fail(String msg) {
