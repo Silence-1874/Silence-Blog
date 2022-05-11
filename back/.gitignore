@@ -31,3 +31,4 @@ build/
 .vscode/
 /src/main/resources/application-dev.yml
 /.mvn/
+/src/test/java/top/silence/test/
