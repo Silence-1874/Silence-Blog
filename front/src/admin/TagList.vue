@@ -7,7 +7,11 @@
             </el-col>
         </el-row>
 
-        <el-table :data="tagList">
+        <el-table :data="tagList"
+                  :header-cell-style="{background:'#eef1f6',color:'#606266'}"
+                  stripe="true"
+                  border="true"
+                  style="margin-bottom: 15px; margin-top: 15px">
             <el-table-column label="序号" type="index" width="50"></el-table-column>
             <el-table-column label="名称" prop="name"></el-table-column>
             <el-table-column label="颜色">
@@ -91,7 +95,13 @@
                     pageNum: 1,
                     pageSize: 10
                 },
-                tagList: [],
+                tagList: [
+                    {
+                        id: 1,
+                        name: '测试标签',
+                        color: 'green',
+                    }
+                ],
                 total: 0,
                 addDialogVisible: false,
                 editDialogVisible: false,
