@@ -15,26 +15,24 @@
         <!--博客列表-->
         <el-table :data="blogList"
                   :header-cell-style="{background:'#eef1f6',color:'#606266'}"
-                  stripe="true"
-                  border="true"
-                  style="margin-bottom: 15px; margin-top: 15px">
+                  stripe border style="margin-bottom: 15px; margin-top: 15px">
             <el-table-column label="序号" type="index" width="50" align="center"></el-table-column>
             <el-table-column label="标题" prop="title" show-overflow-tooltip align="center"></el-table-column>
-            <el-table-column label="分类" prop="category" width="150" align="center"></el-table-column>
+            <el-table-column label="分类" prop="categoryId" width="150" align="center"></el-table-column>
 
             <el-table-column label="置顶" width="100" align="center">
                 <template v-slot="scope">
-                    <el-switch v-model="scope.row.top" :active-value="1" :inactive-value="0"
+                    <el-switch v-model= "scope.row.isTop" :active-value=true :inactive-value=false
                                @change="updateTop"></el-switch>
                 </template>
             </el-table-column>
 
             <el-table-column label="创建时间" width="170" align="center">
-                <template v-slot="scope">{{ scope.row.createTime }}</template>
+                <template v-slot="scope">{{ scope.row.createTime | dateFormat }}</template>
             </el-table-column>
 
             <el-table-column label="最近更新" width="170" align="center">
-                <template v-slot="scope">{{ scope.row.updateTime }}</template>
+                <template v-slot="scope">{{ scope.row.updateTime | dateFormat }}</template>
             </el-table-column>
 
             <el-table-column label="操作" width="200" align="center">
@@ -67,40 +65,16 @@
         data() {
             return {
                 queryInfo: {
-                    title: '搜索测试',
+                    title: '',
                     pageNum: 1,
                     pageSize: 10
                 },
-                blogList: [
-                    {
-                        "id": 1,
-                        "title": "测试文章",
-                        "top": true,
-                        "createTime": "2022-05-11T01:43:58.000+0000",
-                        "updateTime": "2022-05-11T01:43:58.000+0000",
-                        "category": '测试分类',
-                    },
-                    {
-                        "id": 2,
-                        "title": "测试文章2",
-                        "top": true,
-                        "createTime": "2022-05-11T01:43:58.000+0000",
-                        "updateTime": "2022-05-11T01:43:58.000+0000",
-                        "category": '测试分类2',
-                    },
-                    {
-                        "id": 3,
-                        "title": "测试文章3",
-                        "top": true,
-                        "createTime": "2022-05-11T01:43:58.000+0000",
-                        "updateTime": "2022-05-11T01:43:58.000+0000",
-                        "category": '测试分类3',
-                    },
-                ],
+                blogList: [],
                 total: 0,
             }
         },
         created() {
+            this.getData();
         },
         methods: {
             // 根据标题搜索文章
@@ -109,6 +83,11 @@
 
             // 获取当前分页的博客
             getData() {
+                this.$axios.get("/admin/blog/" + this.queryInfo.pageNum + "/" + this.queryInfo.pageSize).then(res => {
+                    console.log(res);
+                    this.blogList = res.data.data.records;
+                    this.total = res.data.data.total;
+                })
             },
 
             // 切换置顶状态
@@ -125,10 +104,14 @@
 
             // 监听单页大小改变事件
             handleSizeChange(newPageSize) {
+                this.queryInfo.pageSize = newPageSize;
+                this.getData();
             },
 
             // 监听页码改变的事件
             handleNumChange(newPageNum) {
+                this.queryInfo.pageNum = newPageNum;
+                this.getData();
             },
         }
     }
