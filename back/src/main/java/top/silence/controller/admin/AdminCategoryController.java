@@ -28,4 +28,10 @@ public class AdminCategoryController {
         return Result.ok("成功添加分类", newId);
     }
 
+    @DeleteMapping("/category/{id}")
+    private Result deleteCategory(@PathVariable("id") Long id) {
+        categoryService.removeById(id);
+        return Result.ok("成功删除分类", id);
+    }
+
 }
