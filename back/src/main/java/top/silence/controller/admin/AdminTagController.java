@@ -33,4 +33,10 @@ public class AdminTagController {
         return Result.ok("成功修改标签", tagDO.getId());
     }
 
+    @DeleteMapping("/tag/{id}")
+    private Result deleteTag(@PathVariable("id") Long id) {
+        tagService.removeById(id);
+        return Result.ok("成功删除标签", id);
+    }
+
 }
