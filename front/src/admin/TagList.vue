@@ -9,18 +9,16 @@
 
         <el-table :data="tagList"
                   :header-cell-style="{background:'#eef1f6',color:'#606266'}"
-                  stripe="true"
-                  border="true"
-                  style="margin-bottom: 15px; margin-top: 15px">
-            <el-table-column label="序号" type="index" width="50"></el-table-column>
-            <el-table-column label="名称" prop="name"></el-table-column>
-            <el-table-column label="颜色">
+                  stripe border style="margin-bottom: 15px; margin-top: 15px">
+            <el-table-column label="序号" type="index" width="50" align="center"></el-table-column>
+            <el-table-column label="名称" prop="tagName" align="center"></el-table-column>
+            <el-table-column label="颜色" align="center">
                 <template v-slot="scope">
                     <span style="float:left;width: 100px;">{{ scope.row.color }}</span>
                     <span style="float:left;width: 100px; height: 23px" :class="`me-${scope.row.color}`"></span>
                 </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="操作" align="center">
                 <template v-slot="scope">
                     <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
                     <el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red" @onConfirm="deleteTagById(scope.row.id)">
@@ -95,13 +93,7 @@
                     pageNum: 1,
                     pageSize: 10
                 },
-                tagList: [
-                    {
-                        id: 1,
-                        name: '测试标签',
-                        color: 'green',
-                    }
-                ],
+                tagList: [],
                 total: 0,
                 addDialogVisible: false,
                 editDialogVisible: false,
@@ -135,6 +127,10 @@
         },
         methods: {
             getData() {
+                this.$axios.get("/admin/tag/" + this.queryInfo.pageNum + "/" + this.queryInfo.pageSize).then(res => {
+                    this.tagList = res.data.data.records;
+                    this.total = res.data.data.total;
+                })
             },
 
             addDialogClosed() {
@@ -163,10 +159,14 @@
 
             // 监听单页大小改变事件
             handleSizeChange(newPageSize) {
+                this.queryInfo.pageSize = newPageSize;
+                this.getData();
             },
 
             // 监听页码改变的事件
             handleNumChange(newPageNum) {
+                this.queryInfo.pageNum = newPageNum;
+                this.getData();
             },
         }
     }
