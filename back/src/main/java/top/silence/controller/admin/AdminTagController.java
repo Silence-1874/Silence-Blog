@@ -27,4 +27,10 @@ public class AdminTagController {
         return Result.ok("成功添加标签", newId);
     }
 
+    @PutMapping("/tag")
+    private Result updateTag(@RequestBody TagDO tagDO) {
+        tagService.updateById(tagDO);
+        return Result.ok("成功修改标签", tagDO.getId());
+    }
+
 }
