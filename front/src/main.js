@@ -16,6 +16,16 @@ Vue.use(mavonEditor)
 
 Vue.prototype.$axios = axios
 
+// 成功消息提示
+Vue.prototype.msgSuccess = function (msg) {
+  this.$message.success(msg)
+}
+
+// 错误消息提示
+Vue.prototype.msgError = function (msg) {
+  this.$message.error(msg)
+}
+
 new Vue({
   router,
   store,

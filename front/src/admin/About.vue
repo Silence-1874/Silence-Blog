@@ -45,10 +45,10 @@
                 this.$refs.formRef.validate(valid => {
                     if (valid) {
                         this.$axios.put("/admin/about", this.form).then(res => {
-                            this.$message.success(res.data.msg);
+                            return this.msgSuccess(res.data.msg);
                         });
                     } else {
-                        return this.$message.error("请填写必要的表单！");
+                        return this.msgError("请填写必要的表单！");
                     }
                 })
             }
