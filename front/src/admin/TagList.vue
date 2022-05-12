@@ -38,8 +38,8 @@
         <el-dialog title="添加标签" width="50%" :visible.sync="addDialogVisible" :close-on-click-modal="false" @close="addDialogClosed">
             <!--内容主体-->
             <el-form :model="addForm" :rules="formRules" ref="addFormRef" label-width="80px">
-                <el-form-item label="标签名称" prop="name">
-                    <el-input v-model="addForm.name"></el-input>
+                <el-form-item label="标签名称" prop="tagName">
+                    <el-input v-model="addForm.tagName"></el-input>
                 </el-form-item>
                 <el-form-item label="标签颜色">
                     <el-select v-model="addForm.color" placeholder="请选择颜色" :clearable="true" style="width: 100%">
@@ -98,12 +98,12 @@
                 addDialogVisible: false,
                 editDialogVisible: false,
                 addForm: {
-                    name: '',
+                    tagName: '',
                     color: ''
                 },
                 editForm: {},
                 formRules: {
-                    name: [{required: true, message: '请输入标签名称', trigger: 'blur'}]
+                    tagName: [{required: true, message: '请输入标签名称', trigger: 'blur'}]
                 },
                 colors: [
                     {label: '红色', value: 'red'},
@@ -118,7 +118,6 @@
                     {label: '粉红', value: 'pink'},
                     {label: '棕色', value: 'brown'},
                     {label: '灰色', value: 'grey'},
-                    {label: '黑色', value: 'black'},
                 ],
             }
         },
@@ -144,6 +143,15 @@
             },
 
             addTag() {
+                this.$refs.addFormRef.validate(valid => {
+                    if (valid) {
+                        this.$axios.post("/admin/tag", this.addForm).then(res => {
+                            this.msgSuccess(res.data.msg);
+                            this.addDialogVisible = false;
+                            this.getData();
+                        })
+                    }
+                })
             },
 
             editTag() {
