@@ -21,7 +21,7 @@
             <el-table-column label="操作" align="center">
                 <template v-slot="scope">
                     <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
-                    <el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red" @onConfirm="deleteTagById(scope.row.id)">
+                    <el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red" @confirm="deleteTagById(scope.row.id)">
                         <el-button size="mini" type="danger" icon="el-icon-delete" slot="reference">删除</el-button>
                     </el-popconfirm>
                 </template>
@@ -172,6 +172,10 @@
             },
 
             deleteTagById(id) {
+                this.$axios.delete("/admin/tag/" + id).then(res => {
+                    this.msgSuccess(res.data.msg);
+                    this.getData();
+                })
             },
 
             // 监听单页大小改变事件
