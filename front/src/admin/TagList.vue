@@ -62,8 +62,8 @@
         <el-dialog title="编辑标签" width="50%" :visible.sync="editDialogVisible" :close-on-click-modal="false" @close="editDialogClosed">
             <!--内容主体-->
             <el-form :model="editForm" :rules="formRules" ref="editFormRef" label-width="80px">
-                <el-form-item label="标签名称" prop="name">
-                    <el-input v-model="editForm.name"></el-input>
+                <el-form-item label="标签名称" prop="tagName">
+                    <el-input v-model="editForm.tagName"></el-input>
                 </el-form-item>
                 <el-form-item label="标签颜色" prop="color">
                     <el-select v-model="editForm.color" placeholder="请选择颜色" :clearable="true" style="width: 100%">
@@ -155,6 +155,15 @@
             },
 
             editTag() {
+                this.$refs.editFormRef.validate(valid => {
+                    if (valid) {
+                        this.$axios.put("/admin/tag", this.editForm).then(res => {
+                            this.msgSuccess(res.data.msg);
+                            this.editDialogVisible = false;
+                            this.getData();
+                        })
+                    }
+                })
             },
 
             showEditDialog(row) {
