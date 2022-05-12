@@ -84,7 +84,6 @@
             // 获取当前分页的博客
             getData() {
                 this.$axios.get("/admin/blog/" + this.queryInfo.pageNum + "/" + this.queryInfo.pageSize).then(res => {
-                    console.log(res);
                     this.blogList = res.data.data.records;
                     this.total = res.data.data.total;
                 })
