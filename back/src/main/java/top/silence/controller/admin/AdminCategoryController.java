@@ -34,4 +34,10 @@ public class AdminCategoryController {
         return Result.ok("成功删除分类", id);
     }
 
+    @PutMapping("/category")
+    private Result updateCategory(@RequestBody CategoryDO categoryDO) {
+        categoryService.updateById(categoryDO);
+        return Result.ok("成功修改分类", categoryDO.getId());
+    }
+
 }

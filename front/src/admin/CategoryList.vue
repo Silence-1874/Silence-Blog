@@ -54,8 +54,8 @@
                    @close="editDialogClosed">
             <!--内容主体-->
             <el-form :model="editForm" :rules="formRules" ref="editFormRef" label-width="80px">
-                <el-form-item label="分类名称" prop="name">
-                    <el-input v-model="editForm.name"></el-input>
+                <el-form-item label="分类名称" prop="categoryName">
+                    <el-input v-model="editForm.categoryName"></el-input>
                 </el-form-item>
             </el-form>
             <!--底部-->
@@ -83,7 +83,10 @@
                 addForm: {
                     categoryName: ''
                 },
-                editForm: {},
+                editForm: {
+                    id: 0,
+                    categoryName: ''
+                },
                 formRules: {
                     categoryName: [{required: true, message: '请输入分类名称', trigger: 'blur'}]
                 }
@@ -121,9 +124,12 @@
             },
 
             editCategory() {
+                this.$axios.put("/admin/category", this.editForm).then()
             },
 
             showEditDialog(row) {
+                this.editForm = row;
+                this.editDialogVisible = true;
             },
 
             deleteCategoryById(id) {
