@@ -8,6 +8,7 @@ import axios from 'axios'
 import './axios.js'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import './util/dateFormatUtil.js'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
