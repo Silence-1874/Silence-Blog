@@ -21,4 +21,11 @@ public class AdminCategoryController {
         return Result.ok("成功获得分类分页信息", pages);
     }
 
+    @PostMapping("/category")
+    private Result addCategory(@RequestBody CategoryDO categoryDO) {
+        categoryService.save(categoryDO);
+        Long newId = categoryDO.getId();
+        return Result.ok("成功添加分类", newId);
+    }
+
 }
