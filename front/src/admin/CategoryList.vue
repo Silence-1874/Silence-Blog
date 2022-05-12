@@ -39,8 +39,8 @@
                    @close="addDialogClosed">
             <!--内容主体-->
             <el-form :model="addForm" :rules="formRules" ref="addFormRef" label-width="80px">
-                <el-form-item label="分类名称" prop="name">
-                    <el-input v-model="addForm.name"></el-input>
+                <el-form-item label="分类名称" prop="categoryName">
+                    <el-input v-model="addForm.categoryName"></el-input>
                 </el-form-item>
             </el-form>
             <!--底部-->
@@ -82,11 +82,11 @@
                 addDialogVisible: false,
                 editDialogVisible: false,
                 addForm: {
-                    name: ''
+                    categoryName: ''
                 },
                 editForm: {},
                 formRules: {
-                    name: [{required: true, message: '请输入分类名称', trigger: 'blur'}]
+                    categoryName: [{required: true, message: '请输入分类名称', trigger: 'blur'}]
                 }
             }
         },
@@ -110,6 +110,15 @@
             },
 
             addCategory() {
+                this.$refs.addFormRef.validate(valid => {
+                    if (valid) {
+                        this.$axios.post("/admin/category", this.addForm).then(res => {
+                            this.msgSuccess(res.data.msg);
+                            this.addDialogVisible = false;
+                            this.getData();
+                        })
+                    }
+                })
             },
 
             editCategory() {
