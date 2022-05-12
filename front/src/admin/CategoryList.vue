@@ -10,11 +10,11 @@
 
         <el-table :data="categoryList"
                   :header-cell-style="{background:'#eef1f6',color:'#606266'}"
-                  stripe="true"
-                  border="true"
+                  stripe
+                  border
                   style="margin-bottom: 15px; margin-top: 15px">
             <el-table-column label="序号" type="index" width="50" align="center"></el-table-column>
-            <el-table-column label="名称" prop="name" align="center"></el-table-column>
+            <el-table-column label="名称" prop="categoryName" align="center"></el-table-column>
             <el-table-column label="操作" align="center">
                 <template v-slot="scope">
                     <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑
@@ -77,12 +77,7 @@
                     pageNum: 1,
                     pageSize: 10
                 },
-                categoryList: [
-                    {
-                        id: 1,
-                        name: '测试分类'
-                    }
-                ],
+                categoryList: [],
                 total: 0,
                 addDialogVisible: false,
                 editDialogVisible: false,
@@ -100,6 +95,10 @@
         },
         methods: {
             getData() {
+                this.$axios.get("/admin/category/" + this.queryInfo.pageNum + "/" + this.queryInfo.pageSize).then(res => {
+                    this.categoryList = res.data.data.records;
+                    this.total = res.data.data.total;
+                })
             },
 
             addDialogClosed() {
@@ -124,10 +123,14 @@
 
             // 监听单页大小改变事件
             handleSizeChange(newPageSize) {
+                this.queryInfo.pageSize = newPageSize;
+                this.getData();
             },
 
             // 监听页码改变的事件
             handleNumChange(newPageNum) {
+                this.queryInfo.pageNum = newPageNum;
+                this.getData();
             },
         }
     }
