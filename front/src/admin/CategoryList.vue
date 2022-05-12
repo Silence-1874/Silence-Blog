@@ -17,7 +17,8 @@
             <el-table-column label="名称" prop="categoryName" align="center"></el-table-column>
             <el-table-column label="操作" align="center">
                 <template v-slot="scope">
-                    <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
+                    <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row)">编辑
+                    </el-button>
                     <el-popconfirm title="确定删除吗？" icon="el-icon-delete" iconColor="red"
                                    @confirm="deleteCategoryById(scope.row.id)">
                         <el-button size="mini" type="danger" icon="el-icon-delete" slot="reference">删除</el-button>
@@ -124,7 +125,15 @@
             },
 
             editCategory() {
-                this.$axios.put("/admin/category", this.editForm).then()
+                this.$refs.editFormRef.validate(valid => {
+                    if (valid) {
+                        this.$axios.put("/admin/category", this.editForm).then(res => {
+                            this.msgSuccess(res.data.msg);
+                            this.editDialogVisible = false;
+                            this.getData();
+                        })
+                    }
+                })
             },
 
             showEditDialog(row) {
