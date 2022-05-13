@@ -69,4 +69,12 @@ public class AdminBlogController {
         return Result.ok("成功获得当前博客下的标签Id", tagList);
     }
 
+    @PutMapping("/blog/top/{id}")
+    public Result switchTop(@PathVariable("id") Long id) {
+        BlogDO blog = blogService.getById(id);
+        blog.setIsTop(!blog.getIsTop());
+        blogService.updateById(blog);
+        return Result.ok("成功切换置顶状态");
+    }
+
 }
