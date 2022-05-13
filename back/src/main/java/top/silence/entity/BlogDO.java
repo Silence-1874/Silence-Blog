@@ -68,7 +68,7 @@ public class BlogDO {
     /**
      * 分类Id
      */
-    private Integer categoryId;
+    private Long categoryId;
 
     /**
      * 是否置顶
