@@ -14,8 +14,8 @@ import top.silence.service.BlogTagService;
 import top.silence.service.CategoryService;
 import top.silence.service.TagService;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Silence
@@ -81,6 +81,56 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
         // 建立博客与标签的映射关系
         blogTagService.mapBlogTag(blog.getId(), blogWriteDTO.getTagList());
         return blog.getId();
+    }
+
+    @Override
+    public Long updateBlog(BlogWriteDTO blogWriteDTO, Long id) {
+        BlogDO blog = getById(id);
+        blog.setTitle(blogWriteDTO.getTitle());
+        blog.setUrl(blogWriteDTO.getUrl());
+        blog.setContent(blogWriteDTO.getContent());
+        CategoryDO blogCategory = blogWriteDTO.getCategory();
+        List<TagDO> blogTagList = blogWriteDTO.getTagList();
+
+        // 插入新分类
+        if (blogCategory.getId() == null) {
+            categoryService.save(blogCategory);
+        }
+        // 更新分类
+        blog.setCategoryId(blogCategory.getId());
+
+        // 更新时间
+        blog.setUpdateTime(new Date());
+
+        // 插入新标签
+        for (TagDO blogTag : blogTagList) {
+            if (blogTag.getId() == null) {
+                tagService.save(blogTag);
+            }
+        }
+        // 更新标签
+        List<Long> newList = blogWriteDTO.getTagList().stream().map(TagDO::getId).collect(Collectors.toList());
+        List<Long> oldList = blogTagService.getTagIdListByBlogId(id);
+        updateTagList(id, newList, oldList);
+        blogMapper.updateById(blog);
+        return null;
+    }
+
+    private void updateTagList(Long blogId, List<Long> newList, List<Long> oldList) {
+        Set<Long> newSet = new HashSet<>(newList);
+        Set<Long> oldSet = new HashSet<>(oldList);
+        // 删除标签
+        for (Long id : oldSet) {
+            if (!newSet.contains(id)) {
+                blogTagService.deleteBlogTag(blogId, id);
+            }
+        }
+        // 新增标签
+        for (Long id : newSet) {
+            if (!oldSet.contains(id)) {
+                blogTagService.insertBlogTag(blogId, id);
+            }
+        }
     }
 
 }

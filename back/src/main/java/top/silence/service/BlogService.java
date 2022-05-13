@@ -19,10 +19,17 @@ public interface BlogService extends IService<BlogDO> {
     Page<BlogDO> listBlog(Integer pageNum, Integer pageSize);
 
     /**
-     * 写博客
+     * 写博文
      * @author Silence
      * @date 2022/5/12 22:29
      */
     Long saveBlog(BlogWriteDTO blogWriteDTO);
+
+    /**
+     * 修改博文
+     * @author Silence
+     * @date 2022/5/13 16:41
+     */
+    Long updateBlog(BlogWriteDTO blogWriteDTO, Long id);
 
 }

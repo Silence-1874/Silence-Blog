@@ -8,7 +8,9 @@ import top.silence.entity.TagDO;
 import top.silence.mapper.BlogTagMapper;
 import top.silence.service.BlogTagService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +39,34 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTagDO> im
                 blogTagMapper.insert(blogTagDO);
             }
         }
+    }
+
+    @Override
+    public List<Long> getTagIdListByBlogId(Long blogId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("blog_id", blogId);
+        List<BlogTagDO> list = blogTagMapper.selectByMap(map);
+        List<Long> tagList = list.stream().map(BlogTagDO::getTagId).collect(Collectors.toList());
+        return tagList;
+    }
+
+    @Override
+    public Boolean deleteBlogTag(Long blogId, Long tagId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("blog_id", blogId);
+        map.put("tag_id", tagId);
+        int ret = blogTagMapper.deleteByMap(map);
+        return ret != 0;
+    }
+
+    @Override
+    public Boolean insertBlogTag(Long blogId, Long tagId) {
+        List<Long> tagIdList = getTagIdListByBlogId(blogId);
+        if (!tagIdList.contains(tagId)) {
+            blogTagMapper.insert(new BlogTagDO(blogId, tagId));
+            return true;
+        }
+        return false;
     }
 
 }

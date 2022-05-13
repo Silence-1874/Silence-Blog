@@ -10,6 +10,7 @@ import top.silence.entity.BlogDO;
 import top.silence.entity.CategoryDO;
 import top.silence.entity.TagDO;
 import top.silence.service.BlogService;
+import top.silence.service.BlogTagService;
 import top.silence.service.CategoryService;
 import top.silence.service.TagService;
 
@@ -28,16 +29,31 @@ public class AdminBlogController {
     @Autowired
     private TagService tagService;
 
+    @Autowired
+    private BlogTagService blogTagService;
+
     @GetMapping("/blog/{pageNum}/{pageSize}")
     private Result listBlog(@PathVariable Integer pageNum, @PathVariable Integer pageSize) {
         Page<BlogDO> pages = blogService.listBlog(pageNum, pageSize);
         return Result.ok("成功获得博客分页信息", pages);
     }
 
+    @GetMapping("/blog/{id}")
+    private Result getBlogById(@PathVariable("id") Long id) {
+        BlogDO blogDO = blogService.getById(id);
+        return Result.ok("成功获得博客信息", blogDO);
+    }
+
     @PostMapping("/blog")
     private Result addBlog(@RequestBody BlogWriteDTO blogWriteDTO) {
         Long ret = blogService.saveBlog(blogWriteDTO);
         return Result.ok("成功发表新博文", ret);
+    }
+
+    @PutMapping("/blog/{id}")
+    private Result updateBlog(@RequestBody BlogWriteDTO blogWriteDTO, @PathVariable("id") Long id) {
+        Long ret = blogService.updateBlog(blogWriteDTO, id);
+        return Result.ok("成功修改博文", ret);
     }
 
     @GetMapping("/category_tag")
@@ -47,5 +63,10 @@ public class AdminBlogController {
         return Result.ok("成功获得现有分类和标签", new CategoryAndTagDTO(categoryList, tagList));
     }
 
+    @GetMapping("/blogTag/{blogId}")
+    private Result getBlogTag(@PathVariable("blogId") Long blogId) {
+        List<Long> tagList = blogTagService.getTagIdListByBlogId(blogId);
+        return Result.ok("成功获得当前博客下的标签Id", tagList);
+    }
 
 }
