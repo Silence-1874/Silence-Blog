@@ -18,7 +18,8 @@
                   stripe border style="margin-bottom: 15px; margin-top: 15px">
             <el-table-column label="序号" type="index" width="50" align="center"></el-table-column>
             <el-table-column label="标题" prop="title" show-overflow-tooltip align="center"></el-table-column>
-            <el-table-column label="分类" prop="categoryId" width="150" align="center"></el-table-column>
+            <el-table-column label="分类" prop="categoryId" :formatter="getCategoryNameById" width="150" align="center"></el-table-column>
+            <el-table-column label="浏览量" prop="views" width="150" align="center"></el-table-column>
 
             <el-table-column label="置顶" width="100" align="center">
                 <template v-slot="scope">
@@ -70,7 +71,18 @@
                     pageSize: 10
                 },
                 blogList: [],
+                categoryList: [
+                    {
+                        "id": 2,
+                        "categoryName": "222"
+                    },
+                    {
+                        "id": 3,
+                        "categoryName": "333"
+                    }
+                ],
                 total: 0,
+                name: "111",
             }
         },
         created() {
@@ -87,6 +99,9 @@
                     this.blogList = res.data.data.records;
                     this.total = res.data.data.total;
                 })
+                this.$axios.get("/admin/category").then(res => {
+                    this.categoryList = res.data.data;
+                })
             },
 
             // 切换置顶状态
@@ -100,6 +115,15 @@
 
             // 通过博客id删除博客
             deleteBlogById(blogId) {
+            },
+
+            getCategoryNameById(row, column) {
+                for (var category of this.categoryList) {
+                    if (row.categoryId == category.id) {
+                        return category.categoryName;
+                    }
+                }
+                return "111";
             },
 
             // 监听单页大小改变事件

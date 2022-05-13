@@ -34,6 +34,11 @@ public class AdminCategoryController {
         return Result.ok("成功删除分类", id);
     }
 
+    @GetMapping("/category")
+    private Result listAllCategory() {
+        return Result.ok("成功查询所有分类", categoryService.list());
+    }
+
     @GetMapping("/category/{id}")
     private Result getCategoryById(@PathVariable("id") Long id) {
         CategoryDO category = categoryService.getById(id);
