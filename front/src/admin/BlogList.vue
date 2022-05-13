@@ -95,6 +95,7 @@
 
             // 跳转到博客编辑页
             goBlogEditPage(blogId) {
+                this.$router.push(`/admin/edit/${blogId}`)
             },
 
             // 通过博客id删除博客

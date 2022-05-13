@@ -20,7 +20,7 @@
 
             <el-row :gutter="20">
                 <el-col :span="12">
-                    <el-form-item label="分类" prop="cate">
+                    <el-form-item label="分类" prop="category">
                         <el-select v-model="form.category" placeholder="请选择分类（输入可添加新分类）" :allow-create="true"
                                    :filterable="true" style="width: 100%;" default-first-option>
                             <el-option :label="item.categoryName" :value="item.id" v-for="item in categoryList"
@@ -71,8 +71,8 @@
         },
         created() {
             this.getData()
-            if (this.$route.params.id) {
-                this.getBlog(this.$route.params.id)
+            if (this.$route.params.blogId) {
+                this.getBlog(this.$route.params.blogId)
             }
         },
         methods: {
@@ -83,8 +83,27 @@
                 })
             },
 
-            getBlog(id) {
+            getCategoryById(id) {
+                this.$axios.get("/admin/category/" + id).then(res => {
+                    this.form.category = res.data.data.id;
+                })
+            },
 
+            getTagListById(id) {
+                this.$axios.get("/admin/blogTag/" + id).then(res => {
+                    this.form.tagList = res.data.data;
+                })
+            },
+
+            getBlog(id) {
+                this.$axios.get("/admin/blog/" + id).then(res => {
+                    const dto = res.data.data;
+                    this.form.title = dto.title;
+                    this.form.url = dto.url;
+                    this.form.content = dto.content;
+                    this.getCategoryById(dto.categoryId);
+                    this.getTagListById(id);
+                })
             },
 
             addCategoryIfNotExit(curCategory) {
@@ -131,10 +150,33 @@
                 })
             },
 
+            updateBlog() {
+                this.form.category = this.addCategoryIfNotExit(this.form.category);
+                var tempTagList = [];
+                for (const tag of this.form.tagList) {
+                    const t = this.addTagIfNotExit(tag);
+                    tempTagList.push(this.addTagIfNotExit(tag));
+                }
+
+                // 深拷贝
+                var formDTO = JSON.parse(JSON.stringify(this.form));
+                formDTO.tagList = tempTagList
+
+                this.$refs.formRef.validate(valid => {
+                    if (valid) {
+                        const blogId = this.$route.params.blogId;
+                        this.$axios.put("/admin/blog/" + blogId, formDTO).then(res => {
+                            this.msgSuccess(res.data.msg);
+                            this.$router.push('/admin/article')
+                        })
+                    }
+                })
+            },
+
             submit() {
                 this.$refs.formRef.validate(valid => {
                     if (valid) {
-                        if (this.$route.params.id) {
+                        if (this.$route.params.blogId) {
                             this.updateBlog();
                         } else {
                             this.addBlog();
