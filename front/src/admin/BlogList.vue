@@ -24,7 +24,7 @@
             <el-table-column label="置顶" width="100" align="center">
                 <template v-slot="scope">
                     <el-switch v-model= "scope.row.isTop" :active-value=true :inactive-value=false
-                               @change="updateTop"></el-switch>
+                               @change="switchTop(scope.row)"></el-switch>
                 </template>
             </el-table-column>
 
@@ -105,7 +105,10 @@
             },
 
             // 切换置顶状态
-            updateTop(row) {
+            switchTop(row) {
+                this.$axios.put("/admin/blog/top/" + row.id).then(res => {
+                    this.msgSuccess(res.data.msg);
+                })
             },
 
             // 跳转到博客编辑页
