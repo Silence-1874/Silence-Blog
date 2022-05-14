@@ -105,6 +105,11 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
         // 更新时间
         blog.setUpdateTime(new Date());
 
+        // 更新字数及阅读时间
+        Integer words  = blogWriteDTO.getContent().length();
+        blog.setWords(words);
+        blog.setReadTime(words / 180);
+
         // 插入新标签
         for (TagDO blogTag : blogTagList) {
             if (blogTag.getId() == null) {
