@@ -16,7 +16,7 @@ public interface BlogService extends IService<BlogDO> {
      * @author Silence
      * @date 2022/5/14 8:56
      */
-    Page<BlogDO> searchBlog(Integer pageNum, Integer pageSize, Long categoryId);
+    Page<BlogDO> searchBlog(Integer pageNum, Integer pageSize, Long categoryId, String title);
 
     /**
      * 写博文

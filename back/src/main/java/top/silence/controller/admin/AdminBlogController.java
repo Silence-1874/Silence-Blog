@@ -35,8 +35,8 @@ public class AdminBlogController {
 
     @GetMapping("/blog")
     public Result listBlog(@PathParam("pageNum")Integer pageNum, @PathParam("pageSize") Integer pageSize,
-                           @PathParam("categoryId") Long categoryId) {
-        Page<BlogDO> pages = blogService.searchBlog(pageNum, pageSize, categoryId);
+                           @PathParam("categoryId") Long categoryId, @PathParam("title") String title) {
+        Page<BlogDO> pages = blogService.searchBlog(pageNum, pageSize, categoryId, title);
         return Result.ok("成功获得博客分页信息", pages);
     }
 

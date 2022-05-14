@@ -1,5 +1,6 @@
 package top.silence.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -41,11 +42,14 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
     private BlogTagService blogTagService;
 
     @Override
-    public Page<BlogDO> searchBlog(Integer pageNum, Integer pageSize, Long categoryId) {
+    public Page<BlogDO> searchBlog(Integer pageNum, Integer pageSize, Long categoryId, String title) {
         Page<BlogDO> page = new Page<>(pageNum, pageSize);
         QueryWrapper<BlogDO> queryWrapper= new QueryWrapper<>();
         if (categoryId != null) {
             queryWrapper.eq("category_id", categoryId);
+        }
+        if (StrUtil.isNotBlank(title)) {
+            queryWrapper.like("title", title);
         }
         return blogMapper.selectPage(page, queryWrapper);
     }
