@@ -118,6 +118,10 @@
 
             // 通过博客id删除博客
             deleteBlogById(blogId) {
+                this.$axios.delete("/admin/blog/" + blogId).then(res => {
+                    this.msgSuccess(res.data.msg);
+                    this.getData();
+                })
             },
 
             getCategoryNameById(row, column) {
