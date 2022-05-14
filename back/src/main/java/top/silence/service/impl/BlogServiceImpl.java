@@ -41,17 +41,12 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
     private BlogTagService blogTagService;
 
     @Override
-    public Page<BlogDO> listBlog(Integer pageNum, Integer pageSize) {
-        // 设置分页参数
-        Page<BlogDO> page = new Page<>(pageNum, pageSize);
-        return blogMapper.selectPage(page, null);
-    }
-
-    @Override
-    public Page<BlogDO> listPageByCategoryId(Long categoryId, Integer pageNum, Integer pageSize) {
+    public Page<BlogDO> searchBlog(Integer pageNum, Integer pageSize, Long categoryId) {
         Page<BlogDO> page = new Page<>(pageNum, pageSize);
         QueryWrapper<BlogDO> queryWrapper= new QueryWrapper<>();
-        queryWrapper.eq("category_id", categoryId);
+        if (categoryId != null) {
+            queryWrapper.eq("category_id", categoryId);
+        }
         return blogMapper.selectPage(page, queryWrapper);
     }
 

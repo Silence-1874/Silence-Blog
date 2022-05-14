@@ -14,6 +14,7 @@ import top.silence.service.BlogTagService;
 import top.silence.service.CategoryService;
 import top.silence.service.TagService;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -32,17 +33,11 @@ public class AdminBlogController {
     @Autowired
     private BlogTagService blogTagService;
 
-    @GetMapping("/blog/{pageNum}/{pageSize}")
-    private Result listBlog(@PathVariable Integer pageNum, @PathVariable Integer pageSize) {
-        Page<BlogDO> pages = blogService.listBlog(pageNum, pageSize);
+    @GetMapping("/blog")
+    public Result listBlog(@PathParam("pageNum")Integer pageNum, @PathParam("pageSize") Integer pageSize,
+                           @PathParam("categoryId") Long categoryId) {
+        Page<BlogDO> pages = blogService.searchBlog(pageNum, pageSize, categoryId);
         return Result.ok("成功获得博客分页信息", pages);
-    }
-
-    @GetMapping("/blog_category/{categoryId}/{pageNum}/{pageSize}")
-    public Result listBlogByCategory(@PathVariable("categoryId") Long categoryId,
-                                     @PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize) {
-        Page<BlogDO> pages = blogService.listPageByCategoryId(categoryId, pageNum, pageSize);
-        return Result.ok("成功获得当前分类下的博客分页信息", pages);
     }
 
     @GetMapping("/blog/{id}")

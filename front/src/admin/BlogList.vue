@@ -6,7 +6,6 @@
                 <el-input v-model="queryInfo.title" :clearable="true"
                           placeholder="输入文章标题搜索" size="medium" style="min-width: 500px"
                           @clear="search" @keyup.native.enter="search">
-                    <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
                     <el-select v-model="queryInfo.categoryId" slot="prepend" placeholder="请选择分类" :clearable="true" @change="search" style="width: 160px">
                         <el-option :label="item.categoryName" :value="item.id" v-for="item in categoryList" :key="item.id"></el-option>
                     </el-select>
@@ -70,7 +69,7 @@
             return {
                 queryInfo: {
                     title: '',
-                    categoryId: null,
+                    categoryId: '',
                     pageNum: 1,
                     pageSize: 10
                 },
@@ -102,21 +101,16 @@
 
             // 获取当前分页的博客
             getData() {
-                var categoryId = this.queryInfo.categoryId;
-                if (categoryId === null || categoryId === '') {
-                    this.$axios.get("/admin/blog/" + this.queryInfo.pageNum + "/" + this.queryInfo.pageSize).then(res => {
-                        this.blogList = res.data.data.records;
-                        this.total = res.data.data.total;
-                    })
-                } else {
-                    this.$axios.get("/admin/blog_category/"
-                        + categoryId
-                        + "/" + this.queryInfo.pageNum
-                        + "/" + this.queryInfo.pageSize).then(res => {
-                        this.blogList = res.data.data.records;
-                        this.total = res.data.data.total;
-                    })
-                }
+                const info = this.queryInfo;
+                this.$axios.get(
+                    "/admin/blog?"
+                    + "pageNum=" + info.pageNum
+                    + "&pageSize=" + info.pageSize
+                    + "&categoryId=" + info.categoryId
+                ).then (res =>{
+                    this.blogList = res.data.data.records;
+                    this.total = res.data.data.total;
+                });
                 this.$axios.get("/admin/category").then(res => {
                     this.categoryList = res.data.data;
                 })

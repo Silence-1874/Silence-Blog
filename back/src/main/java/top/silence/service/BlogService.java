@@ -12,18 +12,11 @@ import top.silence.entity.BlogDO;
 public interface BlogService extends IService<BlogDO> {
 
     /**
-     * 根据分页信息获得分页数据
+     * 根据查询信息获得分页数据
      * @author Silence
-     * @date 2022/5/12 9:22
+     * @date 2022/5/14 8:56
      */
-    Page<BlogDO> listBlog(Integer pageNum, Integer pageSize);
-
-    /**
-     * 根据分类Id获得此分类下的博客分页数据
-     * @author Silence
-     * @date 2022/5/14 8:33
-     */
-    Page<BlogDO> listPageByCategoryId(Long categoryId, Integer pageNum, Integer pageSize);
+    Page<BlogDO> searchBlog(Integer pageNum, Integer pageSize, Long categoryId);
 
     /**
      * 写博文
