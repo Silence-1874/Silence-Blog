@@ -1,5 +1,7 @@
 package top.silence.controller.admin;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +9,7 @@ import top.silence.dto.Result;
 import top.silence.entity.CategoryDO;
 import top.silence.service.CategoryService;
 
+@SaCheckLogin
 @RestController
 @RequestMapping("/admin")
 public class AdminCategoryController {
@@ -21,6 +24,7 @@ public class AdminCategoryController {
         return Result.ok("成功获得分类分页信息", pages);
     }
 
+    @SaCheckRole("admin")
     @PostMapping("/category")
     private Result addCategory(@RequestBody CategoryDO categoryDO) {
         categoryService.save(categoryDO);
@@ -28,6 +32,7 @@ public class AdminCategoryController {
         return Result.ok("成功添加分类", newId);
     }
 
+    @SaCheckRole("admin")
     @DeleteMapping("/category/{id}")
     private Result deleteCategory(@PathVariable("id") Long id) {
         categoryService.removeById(id);
@@ -49,6 +54,7 @@ public class AdminCategoryController {
         }
     }
 
+    @SaCheckRole("admin")
     @PutMapping("/category")
     private Result updateCategory(@RequestBody CategoryDO categoryDO) {
         categoryService.updateById(categoryDO);
