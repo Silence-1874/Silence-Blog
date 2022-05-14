@@ -38,6 +38,13 @@ public class AdminBlogController {
         return Result.ok("成功获得博客分页信息", pages);
     }
 
+    @GetMapping("/blog_category/{categoryId}/{pageNum}/{pageSize}")
+    public Result listBlogByCategory(@PathVariable("categoryId") Long categoryId,
+                                     @PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize) {
+        Page<BlogDO> pages = blogService.listPageByCategoryId(categoryId, pageNum, pageSize);
+        return Result.ok("成功获得当前分类下的博客分页信息", pages);
+    }
+
     @GetMapping("/blog/{id}")
     private Result getBlogById(@PathVariable("id") Long id) {
         BlogDO blogDO = blogService.getById(id);

@@ -19,6 +19,13 @@ public interface BlogService extends IService<BlogDO> {
     Page<BlogDO> listBlog(Integer pageNum, Integer pageSize);
 
     /**
+     * 根据分类Id获得此分类下的博客分页数据
+     * @author Silence
+     * @date 2022/5/14 8:33
+     */
+    Page<BlogDO> listPageByCategoryId(Long categoryId, Integer pageNum, Integer pageSize);
+
+    /**
      * 写博文
      * @author Silence
      * @date 2022/5/12 22:29
@@ -38,4 +45,5 @@ public interface BlogService extends IService<BlogDO> {
      * @date 2022/5/14 7:49
      */
     void deleteBlog(Long id);
+
 }

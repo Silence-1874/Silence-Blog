@@ -1,5 +1,6 @@
 package top.silence.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,14 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
         // 设置分页参数
         Page<BlogDO> page = new Page<>(pageNum, pageSize);
         return blogMapper.selectPage(page, null);
+    }
+
+    @Override
+    public Page<BlogDO> listPageByCategoryId(Long categoryId, Integer pageNum, Integer pageSize) {
+        Page<BlogDO> page = new Page<>(pageNum, pageSize);
+        QueryWrapper<BlogDO> queryWrapper= new QueryWrapper<>();
+        queryWrapper.eq("category_id", categoryId);
+        return blogMapper.selectPage(page, queryWrapper);
     }
 
     @Override
