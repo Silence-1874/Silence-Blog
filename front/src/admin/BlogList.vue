@@ -107,6 +107,7 @@
                     + "pageNum=" + info.pageNum
                     + "&pageSize=" + info.pageSize
                     + "&categoryId=" + info.categoryId
+                    + "&title=" + info.title
                 ).then (res =>{
                     this.blogList = res.data.data.records;
                     this.total = res.data.data.total;
