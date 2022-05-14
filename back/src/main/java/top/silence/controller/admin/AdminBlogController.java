@@ -77,4 +77,10 @@ public class AdminBlogController {
         return Result.ok("成功切换置顶状态");
     }
 
+    @DeleteMapping("/blog/{id}")
+    public Result removeBlog(@PathVariable("id") Long id) {
+        blogService.deleteBlog(id);
+        return Result.ok("成功删除博客");
+    }
+
 }

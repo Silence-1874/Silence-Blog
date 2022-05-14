@@ -14,7 +14,10 @@ import top.silence.service.BlogTagService;
 import top.silence.service.CategoryService;
 import top.silence.service.TagService;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -114,6 +117,25 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
         updateTagList(id, newList, oldList);
         blogMapper.updateById(blog);
         return null;
+    }
+
+    @Override
+    public void deleteBlog(Long id) {
+        BlogDO blog = blogMapper.selectById(id);
+
+        // 更新修改时间
+        blog.setUpdateTime(new Date());
+        blogMapper.updateById(blog);
+
+        // 删除该博客所有的标签映射信息
+        List<Long> tagIdList = blogTagService.getTagIdListByBlogId(id);
+        for (Long tagId : tagIdList) {
+            blogTagService.deleteBlogTag(id, tagId);
+        }
+
+        // TODO: 删除博客下所有的评论
+
+        blogMapper.deleteById(blog);
     }
 
     private void updateTagList(Long blogId, List<Long> newList, List<Long> oldList) {

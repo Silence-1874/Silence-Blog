@@ -32,4 +32,10 @@ public interface BlogService extends IService<BlogDO> {
      */
     Long updateBlog(BlogWriteDTO blogWriteDTO, Long id);
 
+    /**
+     * 删除博文
+     * @author Silence
+     * @date 2022/5/14 7:49
+     */
+    void deleteBlog(Long id);
 }
