@@ -143,8 +143,10 @@
                 this.$refs.formRef.validate(valid => {
                     if (valid) {
                         this.$axios.post("/admin/blog", formDTO).then(res => {
-                            this.msgSuccess(res.data.msg);
-                            this.$router.push('/admin/article')
+                            if (res.data.isSuccess) {
+                                this.msgSuccess(res.data.msg);
+                                this.$router.push('/admin/article')
+                            }
                         })
                     }
                 })
@@ -166,8 +168,10 @@
                     if (valid) {
                         const blogId = this.$route.params.blogId;
                         this.$axios.put("/admin/blog/" + blogId, formDTO).then(res => {
-                            this.msgSuccess(res.data.msg);
-                            this.$router.push('/admin/article')
+                            if (res.data.isSuccess) {
+                                this.msgSuccess(res.data.msg);
+                                this.$router.push('/admin/article')
+                            }
                         })
                     }
                 })

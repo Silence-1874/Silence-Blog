@@ -116,9 +116,11 @@
                 this.$refs.addFormRef.validate(valid => {
                     if (valid) {
                         this.$axios.post("/admin/category", this.addForm).then(res => {
-                            this.msgSuccess(res.data.msg);
-                            this.addDialogVisible = false;
-                            this.getData();
+                            if (res.data.isSuccess) {
+                                this.msgSuccess(res.data.msg);
+                                this.addDialogVisible = false;
+                                this.getData();
+                            }
                         })
                     }
                 })
@@ -128,9 +130,11 @@
                 this.$refs.editFormRef.validate(valid => {
                     if (valid) {
                         this.$axios.put("/admin/category", this.editForm).then(res => {
-                            this.msgSuccess(res.data.msg);
-                            this.editDialogVisible = false;
-                            this.getData();
+                            if (res.data.isSuccess) {
+                                this.msgSuccess(res.data.msg);
+                                this.editDialogVisible = false;
+                                this.getData();
+                            }
                         })
                     }
                 })
@@ -143,8 +147,10 @@
 
             deleteCategoryById(id) {
                 this.$axios.delete("/admin/category/" + id).then(res => {
-                    this.msgSuccess(res.data.msg);
-                    this.getData();
+                    if (res.data.isSuccess) {
+                        this.msgSuccess(res.data.msg);
+                        this.getData();
+                    }
                 })
             },
 

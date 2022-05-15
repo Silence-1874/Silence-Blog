@@ -35,7 +35,7 @@
                         name="password"
                         tabindex="2"
                         auto-complete="on"
-                        @keyup.enter.native="handleLogin"
+                        @keyup.enter.native="login"
                         clearable
                 />
 
@@ -43,7 +43,7 @@
                     <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
                 </span>
             </el-form-item>
-            <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
+            <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="login">
                 登录
             </el-button>
         </el-form>
@@ -82,7 +82,22 @@
                     this.$refs.password.focus()
                 })
             },
-            handleLogin() {
+            login() {
+                this.$store.commit("REMOVE_INFO");
+                this.$refs.loginForm.validate(valid => {
+                    if (valid) {
+                        this.$axios.post("/login", this.loginForm).then(res => {
+                            if (res.data.isSuccess) {
+                                console.log(res);
+                                this.$store.commit("SET_TOKEN_NAME", res.data.data.tokenName);
+                                this.$store.commit("SET_TOKEN_VALUE", res.data.data.tokenValue);
+                                this.$store.commit("SET_USERINFO", res.data.data.loginId);
+                                this.msgSuccess(res.data.msg);
+                                this.$router.push('/admin')
+                            }
+                        })
+                    }
+                })
             }
         }
     }

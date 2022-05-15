@@ -45,7 +45,9 @@
                 this.$refs.formRef.validate(valid => {
                     if (valid) {
                         this.$axios.put("/admin/about", this.form).then(res => {
-                            return this.msgSuccess(res.data.msg);
+                            if (res.data.isSuccess) {
+                                return this.msgSuccess(res.data.msg);
+                            }
                         });
                     } else {
                         return this.msgError("请填写必要的表单！");

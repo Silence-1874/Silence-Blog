@@ -146,9 +146,11 @@
                 this.$refs.addFormRef.validate(valid => {
                     if (valid) {
                         this.$axios.post("/admin/tag", this.addForm).then(res => {
-                            this.msgSuccess(res.data.msg);
-                            this.addDialogVisible = false;
-                            this.getData();
+                            if (res.data.isSuccess) {
+                                this.msgSuccess(res.data.msg);
+                                this.addDialogVisible = false;
+                                this.getData();
+                            }
                         })
                     }
                 })
@@ -158,9 +160,11 @@
                 this.$refs.editFormRef.validate(valid => {
                     if (valid) {
                         this.$axios.put("/admin/tag", this.editForm).then(res => {
-                            this.msgSuccess(res.data.msg);
-                            this.editDialogVisible = false;
-                            this.getData();
+                            if (res.data.isSuccess) {
+                                this.msgSuccess(res.data.msg);
+                                this.editDialogVisible = false;
+                                this.getData();
+                            }
                         })
                     }
                 })
@@ -173,8 +177,10 @@
 
             deleteTagById(id) {
                 this.$axios.delete("/admin/tag/" + id).then(res => {
-                    this.msgSuccess(res.data.msg);
-                    this.getData();
+                    if (res.data.isSuccess) {
+                        this.msgSuccess(res.data.msg);
+                        this.getData();
+                    }
                 })
             },
 

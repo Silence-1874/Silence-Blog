@@ -120,7 +120,6 @@
             // 切换置顶状态
             switchTop(row) {
                 this.$axios.put("/admin/blog/top/" + row.id).then(res => {
-                    this.msgSuccess(res.data.msg);
                 })
             },
 
@@ -132,8 +131,10 @@
             // 通过博客id删除博客
             deleteBlogById(blogId) {
                 this.$axios.delete("/admin/blog/" + blogId).then(res => {
-                    this.msgSuccess(res.data.msg);
-                    this.getData();
+                    if (res.data.isSuccess) {
+                        this.msgSuccess(res.data.msg);
+                        this.getData();
+                    }
                 })
             },
 

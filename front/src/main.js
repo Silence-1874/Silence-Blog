@@ -11,6 +11,7 @@ import 'mavon-editor/dist/css/index.css'
 import './util/dateFormatUtil.js'
 import './css/base.css'
 import './icons'
+import './permission'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
