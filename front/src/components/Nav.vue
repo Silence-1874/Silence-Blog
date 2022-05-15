@@ -1,15 +1,14 @@
 <template>
     <div>
-        主页
+        顶部导航栏
     </div>
 </template>
 
 <script>
     export default {
-        name: "Home"
+        name: 'Nav'
     }
 </script>
 
-<style scoped>
-
+<style>
 </style>

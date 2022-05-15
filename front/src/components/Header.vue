@@ -1,15 +1,14 @@
 <template>
     <div>
-        主页
+        首页头部
     </div>
 </template>
 
 <script>
     export default {
-        name: "Home"
+        name: 'Header'
     }
 </script>
 
-<style scoped>
-
+<style>
 </style>

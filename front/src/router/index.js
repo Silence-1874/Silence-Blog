@@ -6,28 +6,27 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/login',
-    name: 'Login',
-    component: () => import('../admin/Login'),
+    name: 'login',
+    component: () => import('@/admin/Login'),
     meta: { title: '登录' }
   },
   {
     path: '/admin',
-    name: 'Admin',
-    component: () => import('../admin/Admin'),
+    name: 'admin',
+    component: () => import('@/admin/Admin'),
     meta: {
       title: '后台管理'
     },
     children: [
       {
         path: '/',
-        name: '默认',
+        redirect: 'article',
         meta: { requireAuth: true },
-        component: () => import('../admin/BlogList'),
       },
       {
         path: 'write',
-        name: 'BlogWrite',
-        component: () => import('../admin/BlogEdit'),
+        name: 'write',
+        component: () => import('@/admin/BlogEdit'),
         meta: {
           title: '写博客',
           requireAuth: true
@@ -35,17 +34,17 @@ const routes = [
       },
       {
         path: 'edit/:blogId',
-        name: 'BlogEdit',
+        name: 'edit',
+        component: () => import('@/admin/BlogEdit'),
         meta: {
           title: '编辑博客' ,
           requireAuth: true
         },
-      component: () => import('../admin/BlogEdit')
       },
       {
         path: 'article',
-        name: 'BlogList',
-        component: () => import('../admin/BlogList'),
+        name: 'article',
+        component: () => import('@/admin/BlogList'),
         meta: {
           title: '文章管理',
           requireAuth: true
@@ -53,7 +52,8 @@ const routes = [
       },
       {
         path: 'category',
-        component: () => import('../admin/CategoryList'),
+        name: 'category',
+        component: () => import('@/admin/CategoryList'),
         meta: {
           title: '分类管理',
           requireAuth: true
@@ -61,7 +61,8 @@ const routes = [
       },
       {
         path: 'tag',
-        component: () => import('../admin/TagList'),
+        name: 'tag',
+        component: () => import('@/admin/TagList'),
         meta: {
           title: '标签管理',
           requireAuth: true
@@ -69,7 +70,8 @@ const routes = [
       },
       {
         path: 'comments',
-        component: () => import('../admin/CommentList'),
+        name: 'comments',
+        component: () => import('@/admin/CommentList'),
         meta: {
           title: '评论管理',
           requireAuth: true
@@ -77,7 +79,8 @@ const routes = [
       },
       {
         path: 'about',
-        component: () => import('../admin/About'),
+        name: 'about',
+        component: () => import('@/admin/About'),
         meta: {
           title: '关于我',
           requireAuth: true
@@ -85,7 +88,8 @@ const routes = [
       },
       {
         path: 'userManager',
-        component: () => import('../admin/UserManager'),
+        name: 'userManager',
+        component: () => import('@/admin/UserManager'),
         meta: {
           title: '用户管理',
           requireAuth: true
@@ -93,7 +97,8 @@ const routes = [
       },
       {
         path: 'visitLog',
-        component: () => import('../admin/VisitLog'),
+        name: 'visitLog',
+        component: () => import('@/admin/VisitLog'),
         meta: {
           title: '访问日志',
           requireAuth: true
@@ -103,8 +108,47 @@ const routes = [
   },
   {
     path: '/',
-    name: 'home',
-    component: () => import('../views/Home')
+    name: 'index',
+    component: () => import('@/views/Index'),
+    redirect: '/home',
+    children: [
+      {
+        path: '/home',
+        name: 'home',
+        component: () => import('@/views/Home'),
+        meta: {title: '首页'}
+      },
+      {
+        path: '/archives',
+        name: 'archives',
+        component: () => import('@/views/Archives'),
+        meta: {title: '归档'}
+      },
+      {
+        path: '/blog/:id',
+        name: 'blog',
+        component: () => import('@/views/Blog'),
+        meta: {title: '博客详情'}
+      },
+      {
+        path: '/tag/:name',
+        name: 'tag',
+        component: () => import('@/views/Tag'),
+        meta: {title: '标签'}
+      },
+      {
+        path: '/category/:name',
+        name: 'category',
+        component: () => import('@/views/Category'),
+        meta: {title: '分类'}
+      },
+      {
+        path: '/about',
+        name: 'about',
+        component: () => import('@/views/About'),
+        meta: {title: '关于我'}
+      }
+    ]
   }
 ]
 

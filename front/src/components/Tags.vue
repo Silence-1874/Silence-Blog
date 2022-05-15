@@ -1,15 +1,14 @@
 <template>
     <div>
-        主页
+        标签
     </div>
 </template>
 
 <script>
     export default {
-        name: "Home"
+        name: 'Tags'
     }
 </script>
 
-<style scoped>
-
+<style>
 </style>

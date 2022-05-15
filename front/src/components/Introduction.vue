@@ -1,15 +1,14 @@
 <template>
     <div>
-        主页
+        个人介绍
     </div>
 </template>
 
 <script>
     export default {
-        name: "Home"
+        name: 'Introduction'
     }
 </script>
 
-<style scoped>
-
+<style>
 </style>

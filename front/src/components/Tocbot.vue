@@ -1,15 +1,14 @@
 <template>
     <div>
-        主页
+        文章目录
     </div>
 </template>
 
 <script>
     export default {
-        name: "Home"
+        name: 'tocbot'
     }
 </script>
 
-<style scoped>
-
+<style>
 </style>

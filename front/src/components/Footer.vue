@@ -1,15 +1,14 @@
 <template>
     <div>
-        主页
+        页脚
     </div>
 </template>
 
 <script>
     export default {
-        name: "Home"
+        name: 'Footer'
     }
 </script>
 
-<style scoped>
-
+<style>
 </style>
