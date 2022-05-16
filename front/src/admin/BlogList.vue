@@ -74,18 +74,8 @@
                     pageSize: 10
                 },
                 blogList: [],
-                categoryList: [
-                    {
-                        "id": 2,
-                        "categoryName": "222"
-                    },
-                    {
-                        "id": 3,
-                        "categoryName": "333"
-                    }
-                ],
+                categoryList: [],
                 total: 0,
-                name: "111",
             }
         },
         created() {
@@ -144,7 +134,7 @@
                         return category.categoryName;
                     }
                 }
-                return "111";
+                return "未分类";
             },
 
             // 监听单页大小改变事件
