@@ -1,7 +1,7 @@
 <template>
     <div class="site">
         <!--顶部导航-->
-        <Nav :categoryList="categoryList"></Nav>
+        <Menu :categoryList="categoryList"></Menu>
 
         <!--首页大图 只在首页展示-->
         <div>
@@ -34,13 +34,13 @@
         </div>
 
         <!--页脚-->
-        <Footer :siteInfo="siteInfo"/>
+        <Footer/>
 
     </div>
 </template>
 
 <script>
-    import Nav from "@/components/Nav";
+    import Menu from "@/components/Menu";
     import Header from "@/components/Header";
     import Footer from "@/components/Footer";
     import Introduction from "@/components/Introduction";
@@ -49,10 +49,9 @@
 
     export default {
         name: "Index",
-        components: {Header, Tocbot, Tags, Nav, Footer, Introduction},
+        components: {Header, Tocbot, Tags, Menu, Footer, Introduction},
         data() {
             return {
-                siteInfo: {},
                 categoryList: [],
                 tagList: [],
             }
@@ -64,11 +63,25 @@
             }
         },
         created() {
+            this.getSite();
         },
         mounted() {
+            //保存可视窗口大小
+            this.$store.commit("SAVE_CLIENT_SIZE", {clientHeight: document.body.clientHeight, clientWidth: document.body.clientWidth})
+            window.onresize = () => {
+                this.$store.commit("SAVE_CLIENT_SIZE", {clientHeight: document.body.clientHeight, clientWidth: document.body.clientWidth})
+            }
         },
         methods: {
             getSite() {
+                // 获得分类列表
+                this.$axios.get("/category").then(res => {
+                    this.categoryList = res.data.data;
+                })
+                // 获得标签列表
+                this.$axios.get("/tag").then(res => {
+                    this.tagList = res.data.data;
+                })
             },
         }
     }
