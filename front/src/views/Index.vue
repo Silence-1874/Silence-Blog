@@ -13,7 +13,7 @@
                 <div class="ui container">
                     <div class="ui stackable grid">
                         <!--左侧-->
-                        <div>
+                        <div class="three wide column">
                             <Introduction></Introduction>
                         </div>
                         <!--中间-->
