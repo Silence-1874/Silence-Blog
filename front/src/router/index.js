@@ -12,7 +12,6 @@ const routes = [
   },
   {
     path: '/admin',
-    name: 'admin',
     component: () => import('@/admin/Admin'),
     meta: {
       title: '后台管理'
@@ -25,7 +24,7 @@ const routes = [
       },
       {
         path: 'write',
-        name: 'write',
+        name: 'adminWrite',
         component: () => import('@/admin/BlogEdit'),
         meta: {
           title: '写博客',
@@ -34,7 +33,7 @@ const routes = [
       },
       {
         path: 'edit/:blogId',
-        name: 'edit',
+        name: 'adminEdit',
         component: () => import('@/admin/BlogEdit'),
         meta: {
           title: '编辑博客' ,
@@ -43,7 +42,7 @@ const routes = [
       },
       {
         path: 'article',
-        name: 'article',
+        name: 'adminArticle',
         component: () => import('@/admin/BlogList'),
         meta: {
           title: '文章管理',
@@ -52,7 +51,7 @@ const routes = [
       },
       {
         path: 'category',
-        name: 'category',
+        name: 'adminCategory',
         component: () => import('@/admin/CategoryList'),
         meta: {
           title: '分类管理',
@@ -61,7 +60,7 @@ const routes = [
       },
       {
         path: 'tag',
-        name: 'tag',
+        name: 'adminTag',
         component: () => import('@/admin/TagList'),
         meta: {
           title: '标签管理',
@@ -70,7 +69,7 @@ const routes = [
       },
       {
         path: 'comments',
-        name: 'comments',
+        name: 'adminComments',
         component: () => import('@/admin/CommentList'),
         meta: {
           title: '评论管理',
@@ -79,7 +78,7 @@ const routes = [
       },
       {
         path: 'about',
-        name: 'about',
+        name: 'adminAbout',
         component: () => import('@/admin/About'),
         meta: {
           title: '关于我',
@@ -88,7 +87,7 @@ const routes = [
       },
       {
         path: 'userManager',
-        name: 'userManager',
+        name: 'adminUserManager',
         component: () => import('@/admin/UserManager'),
         meta: {
           title: '用户管理',
@@ -97,7 +96,7 @@ const routes = [
       },
       {
         path: 'visitLog',
-        name: 'visitLog',
+        name: 'adminVisitLog',
         component: () => import('@/admin/VisitLog'),
         meta: {
           title: '访问日志',
