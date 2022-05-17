@@ -2,8 +2,13 @@ package top.silence.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.silence.dto.ArchiveDTO;
+import top.silence.dto.BlogDTO;
 import top.silence.dto.BlogWriteDTO;
 import top.silence.entity.BlogDO;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Silence
@@ -17,6 +22,20 @@ public interface BlogService extends IService<BlogDO> {
      * @date 2022/5/14 8:56
      */
     Page<BlogDO> searchBlog(Integer pageNum, Integer pageSize, Long categoryId, String title);
+
+    /**
+     * 根据参数获得博客数据
+     * @author Silence
+     * @date 2022/5/17 14:16
+     */
+    List<BlogDTO> listBlog(Integer pageNum, Integer pageSize, Long categoryId);
+
+    /**
+     * 返回某个标签下的所有文章的分类数据
+     * @author Silence
+     * @date 2022/5/17 14:16
+     */
+    List<BlogDTO> listBlogInTag(Integer pageNum, Integer pageSize, Long tagId);
 
     /**
      * 写博文
@@ -39,4 +58,10 @@ public interface BlogService extends IService<BlogDO> {
      */
     void deleteBlog(Long id);
 
+    /**
+     * 按年月日归档博客
+     * @author Silence
+     * @date 2022/5/17 22:01
+     */
+    Map<String, List<ArchiveDTO>> archiveBlog();
 }

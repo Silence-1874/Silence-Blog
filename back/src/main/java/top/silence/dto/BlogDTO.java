@@ -84,4 +84,9 @@ public class BlogDTO {
      */
     private Long totalPage;
 
+    /**
+     * 记录总数
+     */
+    private Long totalRecords;
+
 }

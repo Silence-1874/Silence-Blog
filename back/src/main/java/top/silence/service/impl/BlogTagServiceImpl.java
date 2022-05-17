@@ -60,6 +60,7 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTagDO> im
         map.put("blog_id", blogId);
         List<BlogTagDO> list = blogTagMapper.selectByMap(map);
         List<Long> tagIdList = list.stream().map(BlogTagDO::getTagId).collect(Collectors.toList());
+        System.out.println("-------" + tagIdList);
         List<TagDO> tagList = tagMapper.selectBatchIds(tagIdList);
         return tagList;
     }

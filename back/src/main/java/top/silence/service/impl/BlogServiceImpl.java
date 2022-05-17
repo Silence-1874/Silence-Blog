@@ -1,11 +1,14 @@
 package top.silence.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.silence.dto.ArchiveDTO;
+import top.silence.dto.BlogDTO;
 import top.silence.dto.BlogWriteDTO;
 import top.silence.entity.BlogDO;
 import top.silence.entity.CategoryDO;
@@ -16,10 +19,7 @@ import top.silence.service.BlogTagService;
 import top.silence.service.CategoryService;
 import top.silence.service.TagService;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -56,6 +56,57 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
         queryWrapper.orderByDesc("update_time");
         return blogMapper.selectPage(page, queryWrapper);
     }
+
+    @Override
+    public List<BlogDTO> listBlog(Integer pageNum, Integer pageSize, Long categoryId) {
+        Page<BlogDO> page = new Page<>(pageNum, pageSize);
+        QueryWrapper<BlogDO> queryWrapper= new QueryWrapper<>();
+        if (categoryId != null) {
+            queryWrapper.eq("category_id", categoryId);
+        }
+        queryWrapper.orderByDesc("is_top");
+        queryWrapper.orderByDesc("create_time");
+        queryWrapper.orderByDesc("update_time");
+        Page<BlogDO> pages = blogMapper.selectPage(page, queryWrapper);
+
+
+        List<BlogDO> list = pages.getRecords();
+        List<BlogDTO> newList = new ArrayList<>(list.size());
+
+        // 将每个BlogDO转为BlogDTO
+        for (BlogDO blog : list) {
+            BlogDTO blogDTO = new BlogDTO();
+            BeanUtil.copyProperties(blog, blogDTO);
+            blogDTO.setTotalPage(pages.getPages());
+            blogDTO.setTotalRecords(pages.getTotal());
+            blogDTO.setCategory(categoryService.getById(blog.getCategoryId()));
+            blogDTO.setTagList(blogTagService.getTagListByBlogId(blog.getId()));
+            newList.add(blogDTO);
+        }
+        return newList;
+    }
+
+    @Override
+    public List<BlogDTO> listBlogInTag(Integer pageNum, Integer pageSize, Long tagId) {
+        Page<BlogDO> page = new Page<>(pageNum, pageSize);
+
+        List<BlogDO> list = blogMapper.pageList(page, tagId);
+        List<BlogDTO> newList = new ArrayList<>(list.size());
+
+        Long total = blogMapper.countBlogInTag(tagId);
+        // 将每个BlogDO转为BlogDTO
+        for (BlogDO blog : list) {
+            BlogDTO blogDTO = new BlogDTO();
+            BeanUtil.copyProperties(blog, blogDTO);
+            blogDTO.setTotalPage(total / pageSize + 1);
+            blogDTO.setTotalRecords(total);
+            blogDTO.setCategory(categoryService.getById(blog.getCategoryId()));
+            blogDTO.setTagList(blogTagService.getTagListByBlogId(blog.getId()));
+            newList.add(blogDTO);
+        }
+        return newList;
+    }
+
 
     @Override
     public Long saveBlog(BlogWriteDTO blogWriteDTO) {
@@ -169,6 +220,26 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
                 blogTagService.insertBlogTag(blogId, id);
             }
         }
+    }
+
+
+    @Override
+    public Map<String, List<ArchiveDTO>> archiveBlog() {
+        Map<String, List<ArchiveDTO>> map = new HashMap<>();
+        List<BlogDO> blogList = list();
+        for (BlogDO blog : blogList) {
+            Date createTime = blog.getCreateTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(createTime);
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH) + 1;
+            String key = year + "年" + month + "月";
+            String date = calendar.get(Calendar.DATE) + "日";
+            ArchiveDTO archiveDTO = new ArchiveDTO(blog.getId(), blog.getTitle(), date);
+            map.put(key, map.getOrDefault(key, new ArrayList<>()));
+            map.get(key).add(archiveDTO);
+        }
+        return map;
     }
 
 }
