@@ -51,6 +51,9 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
         if (StrUtil.isNotBlank(title)) {
             queryWrapper.like("title", title);
         }
+        queryWrapper.orderByDesc("is_top");
+        queryWrapper.orderByDesc("create_time");
+        queryWrapper.orderByDesc("update_time");
         return blogMapper.selectPage(page, queryWrapper);
     }
 
