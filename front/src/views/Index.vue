@@ -18,7 +18,7 @@
                         </div>
                         <!--中间-->
                         <div class="ten wide column">
-                            <keep-alive include="BlogList">
+                            <keep-alive include="Home">
                                 <router-view></router-view>
                             </keep-alive>
                         </div>

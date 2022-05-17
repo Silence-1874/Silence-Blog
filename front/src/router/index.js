@@ -114,7 +114,7 @@ const routes = [
       {
         path: '/home',
         name: 'home',
-        component: () => import('@/views/BlogList'),
+        component: () => import('@/views/Home'),
         meta: {title: '首页'}
       },
       {

@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <!--分类-->
-                    <router-link :to="`/category/(blog.category.categoryName)}`" class="ui orange large ribbon label" style="margin-right: 0">
+                    <router-link :to="`/category/${blog.category.categoryName}`" class="ui orange large ribbon label" style="margin-right: 0">
                         <i class="small folder open icon"></i>
                         <span class="m-text-500" v-text="blog.category.categoryName"></span>
                     </router-link>
@@ -68,8 +68,6 @@
 
 <script>
     import {mapState} from "vuex";
-    import {marked} from 'marked'
-    import hljs from 'highlight.js'
 
     export default {
         name: "BlogList",
@@ -78,51 +76,24 @@
         },
         data() {
             return {
-                blogList: [],
-                totalPage: 0,
                 pageNum: 1,
-                pageSize: 5,
-            };
+            }
         },
-        mounted() {
-            marked.setOptions({
-                renderer: new marked.Renderer(),
-                highlight: function (code, lang) {
-                    const language = hljs.getLanguage(lang) ? lang : 'plaintext'
-                    return hljs.highlight(code, {language}).value
-                },
-                langPrefix: 'hljs language-',
-                pedantic: false,
-                gfm: true,
-                breaks: false,
-                sanitize: false,
-                smartLists: true,
-                smartypants: false,
-                xhtml: false
-            })
-        },
-        created() {
-            this.getBlogList();
+        props: {
+            getBlogList: {
+                type: Function,
+                required: true
+            },
+            blogList: {
+                type: Array,
+                required: true
+            },
+            totalPage: {
+                type: Number,
+                required: true
+            }
         },
         methods: {
-            // 获得博客列表
-            getBlogList() {
-                this.$axios.get("blog?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize).then(res => {
-                    const blogList = res.data.data;
-                    if (blogList === null || blogList.length === 0) {
-                        this.totalPage = 0;
-                    } else {
-                        this.totalPage = res.data.data[0].totalPages;
-                    }
-                    // markdown渲染
-                    for (var blog of blogList) {
-                        var content = marked.parse(blog.content);
-                        blog.content = content;
-                    }
-                    this.blogList = blogList;
-                })
-            },
-
             //监听页码改变的事件
             handleCurrentChange(newPage) {
                 //如果是首页，则滚动至Header下方
