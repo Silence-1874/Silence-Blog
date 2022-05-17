@@ -27,6 +27,13 @@ public interface BlogTagService extends IService<BlogTagDO> {
     List<Long> getTagIdListByBlogId(Long blogId);
 
     /**
+     * 根据博客Id返回其下的标签列表
+     * @author Silence
+     * @date 2022/5/17 11:33
+     */
+    List<TagDO> getTagListByBlogId(Long blogId);
+
+    /**
      * 删除博客Id和标签Id的某条对应关系
      * @author Silence
      * @date 2022/5/13 16:55

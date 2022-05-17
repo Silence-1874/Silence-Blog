@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import top.silence.entity.BlogTagDO;
 import top.silence.entity.TagDO;
 import top.silence.mapper.BlogTagMapper;
+import top.silence.mapper.TagMapper;
 import top.silence.service.BlogTagService;
 
 import java.util.HashMap;
@@ -22,6 +23,9 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTagDO> im
 
     @Autowired
     private BlogTagMapper blogTagMapper;
+
+    @Autowired
+    private TagMapper tagMapper;
 
     @Override
     public void mapBlogTag(Long blogId, List<TagDO> tagList) {
@@ -46,7 +50,17 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTagDO> im
         Map<String, Object> map = new HashMap<>();
         map.put("blog_id", blogId);
         List<BlogTagDO> list = blogTagMapper.selectByMap(map);
-        List<Long> tagList = list.stream().map(BlogTagDO::getTagId).collect(Collectors.toList());
+        List<Long> tagIdList = list.stream().map(BlogTagDO::getTagId).collect(Collectors.toList());
+        return tagIdList;
+    }
+
+    @Override
+    public List<TagDO> getTagListByBlogId(Long blogId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("blog_id", blogId);
+        List<BlogTagDO> list = blogTagMapper.selectByMap(map);
+        List<Long> tagIdList = list.stream().map(BlogTagDO::getTagId).collect(Collectors.toList());
+        List<TagDO> tagList = tagMapper.selectBatchIds(tagIdList);
         return tagList;
     }
 
