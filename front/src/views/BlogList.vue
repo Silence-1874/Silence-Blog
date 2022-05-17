@@ -68,6 +68,8 @@
 
 <script>
     import {mapState} from "vuex";
+    import {marked} from 'marked'
+    import hljs from 'highlight.js'
 
     export default {
         name: "BlogList",
@@ -82,6 +84,23 @@
                 pageSize: 5,
             };
         },
+        mounted() {
+            marked.setOptions({
+                renderer: new marked.Renderer(),
+                highlight: function (code, lang) {
+                    const language = hljs.getLanguage(lang) ? lang : 'plaintext'
+                    return hljs.highlight(code, {language}).value
+                },
+                langPrefix: 'hljs language-',
+                pedantic: false,
+                gfm: true,
+                breaks: false,
+                sanitize: false,
+                smartLists: true,
+                smartypants: false,
+                xhtml: false
+            })
+        },
         created() {
             this.getBlogList();
         },
@@ -94,6 +113,11 @@
                         this.totalPage = 0;
                     } else {
                         this.totalPage = res.data.data[0].totalPages;
+                    }
+                    // markdown渲染
+                    for (var blog of blogList) {
+                        var content = marked.parse(blog.content);
+                        blog.content = content;
                     }
                     this.blogList = blogList;
                 })
