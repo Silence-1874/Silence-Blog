@@ -48,7 +48,7 @@
                     <!--标签-->
                     <div class="row m-padded-tb-no">
                         <div class="column m-padding-left-no">
-                            <router-link :to="`/tag/${tag.id}`" class="ui tag label m-text-500 m-margin-small"
+                            <router-link :to="`/tag/${tag.tagName}`" class="ui tag label m-text-500 m-margin-small"
                                          :class="tag.color" v-for="(tag,index) in blog.tagList" :key="index">
                                 {{ tag.tagName }}
                             </router-link>
