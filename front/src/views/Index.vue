@@ -24,9 +24,9 @@
                         </div>
                         <!--右侧-->
                         <div class="three wide column">
-                            <Tags :tagList="tagList"></Tags>
                             <!--只在文章页面显示目录-->
                             <Tocbot v-if="$route.name==='blog'"/>
+                            <Tags :tagList="tagList"></Tags>
                         </div>
                     </div>
                 </div>
