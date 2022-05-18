@@ -36,6 +36,12 @@ public class AdminBlogController {
     @Autowired
     private BlogTagService blogTagService;
 
+    @GetMapping("/blog/all")
+    public Result listAllBlog() {
+        List<BlogDO> list = blogService.list();
+        return Result.ok("成功获得所有博客信息", list);
+    }
+
     @GetMapping("/blog")
     public Result listBlog(@PathParam("pageNum")Integer pageNum, @PathParam("pageSize") Integer pageSize,
                            @PathParam("categoryId") Long categoryId, @PathParam("title") String title) {
