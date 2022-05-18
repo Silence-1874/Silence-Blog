@@ -3,7 +3,7 @@
         <!--搜索-->
         <el-row>
             <el-col :span="6">
-                <el-select v-model="blogId" placeholder="请选择页面" :filterable="true" :clearable="true" @change="search" size="small" style="min-width: 400px">
+                <el-select v-model="queryInfo.blogId" placeholder="请选择页面" :filterable="true" :clearable="true" @change="search" size="small" style="min-width: 400px">
                     <el-option :label="item.title" :value="item.id" v-for="item in blogList" :key="item.id"></el-option>
                 </el-select>
             </el-col>
@@ -18,13 +18,18 @@
                     <el-avatar shape="square" :size="50" fit="contain" :src="scope.row.avatar"></el-avatar>
                 </template>
             </el-table-column>
-            <el-table-column label="昵称" prop="nickname" align="center"> </el-table-column>
+            <el-table-column label="昵称" prop="nickname" align="center">
+                <template v-slot="scope">
+                    {{ scope.row.nickname }}
+                    <el-tag v-if="scope.row.isAdmin" size="mini" effect="dark" style="margin-left: 5px">我</el-tag>
+                </template>
+            </el-table-column>
             <el-table-column label="QQ" prop="qq" width="115" align="center"></el-table-column>
             <el-table-column label="评论内容" prop="content" show-overflow-tooltip align="center"></el-table-column>
             <el-table-column label="IP" prop="ip" width="130" align="center"></el-table-column>
             <el-table-column label="所属博客" show-overflow-tooltip align="center">
                 <template v-slot="scope">
-                    <el-link type="success" :href="`/blog/${scope.row.blog.id}`" target="_blank">{{ scope.row.blog.title }}</el-link>
+                    <el-link type="success" :href="`/blog/${scope.row.blogId}`" target="_blank">{{ getBlogTitleById(scope.row.blogId) }}</el-link>
                 </template>
             </el-table-column>
             <el-table-column label="发表时间" width="170" align="center">
@@ -64,7 +69,7 @@
             <!--底部-->
             <span slot="footer">
 				<el-button @click="editDialogVisible=false">取 消</el-button>
-				<el-button type="primary" @click="editComment">确 定</el-button>
+				<el-button type="primary" @click="updateComment">确 定</el-button>
 			</span>
         </el-dialog>
     </div>
@@ -75,29 +80,13 @@
         name: "CommentList",
         data() {
             return {
-                blogId: null,
                 queryInfo: {
-                    blogId: null,
+                    blogId: '',
                     pageNum: 1,
                     pageSize: 10
                 },
                 total: 0,
-                commentList: [
-                    {
-                        id: 1,
-                        avatar: "123456",
-                        nickname: "haha",
-                        qq: "2245815651",
-                        content: "测试评论内容",
-                        ip: "127.0.0.1",
-                        blog: {
-                            id: 123,
-                            title: "blogTitle",
-                            name: "blogName",
-                        },
-                        createTime: "2022-05-11 09:18:58",
-                    }
-                ],
+                commentList: [],
                 blogList: [],
                 editDialogVisible: false,
                 editForm: {
@@ -122,25 +111,52 @@
         },
         methods: {
             getCommentList() {
+                const info = this.queryInfo;
+                this.$axios.get(
+                    "/admin/comment?"
+                    + "pageNum=" + info.pageNum
+                    + "&pageSize=" + info.pageSize
+                    + "&blogId=" + info.blogId
+                ).then (res =>{
+                    this.commentList = res.data.data.records;
+                    this.total = res.data.data.total;
+                });
             },
 
             getBlogList() {
+                this.$axios.get("/admin/blog/all").then(res => {
+                    this.blogList = res.data.data;
+                })
             },
 
             search() {
+                console.log(this.queryInfo)
                 this.queryInfo.pageNum = 1
                 this.queryInfo.pageSize = 10
                 this.getCommentList()
             },
 
-            //递归展开所有子评论
-            getAllReplyCommentList(comment, replyCommentList) {
+            getBlogTitleById(id) {
+                for (const blog of this.blogList) {
+                    if (id === blog.id) {
+                        return blog.title;
+                    }
+                }
             },
 
             deleteCommentById(id) {
+                this.$axios.delete('/admin/comment/' + id).then(res => {
+                    this.msgSuccess(res.data.msg);
+                    this.getCommentList();
+                })
             },
 
-            editComment() {
+            updateComment() {
+                this.$axios.put('/admin/comment', this.editForm).then(res => {
+                    this.msgSuccess(res.data.msg);
+                    this.editDialogVisible = false;
+                    this.getCommentList();
+                })
             },
 
             showEditDialog(row) {
@@ -156,13 +172,13 @@
             // 监听单页大小改变事件
             handleSizeChange(newPageSize) {
                 this.queryInfo.pageSize = newPageSize;
-                this.getData();
+                this.getCommentList();
             },
 
             // 监听页码改变的事件
             handleNumChange(newPageNum) {
                 this.queryInfo.pageNum = newPageNum;
-                this.getData();
+                this.getCommentList();
             }
         }
     }
