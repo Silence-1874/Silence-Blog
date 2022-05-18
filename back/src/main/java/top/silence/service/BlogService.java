@@ -64,4 +64,11 @@ public interface BlogService extends IService<BlogDO> {
      * @date 2022/5/17 22:01
      */
     Map<String, List<ArchiveDTO>> archiveBlog();
+
+    /**
+     * 根据Id获得博客数据
+     * @author Silence
+     * @date 2022/5/18 7:36
+     */
+    BlogDTO getBlogDTOById(Long id);
 }

@@ -2,6 +2,7 @@ package top.silence.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import top.silence.dto.BlogDTO;
 import top.silence.dto.Result;
@@ -22,6 +23,12 @@ public class BlogCotroller {
                            @PathParam("categoryId") Long categoryId) {
         List<BlogDTO> list = blogService.listBlog(pageNum, pageSize, categoryId);
         return Result.ok("成功获得博客分页数据", list);
+    }
+
+    @GetMapping("/blog/{id}")
+    public Result getBlogDTOById(@PathVariable("id") Long id) {
+        BlogDTO blogDTO = blogService.getBlogDTOById(id);
+        return Result.ok("成功获得博客数据", blogDTO);
     }
 
     @GetMapping("/blogInTag")

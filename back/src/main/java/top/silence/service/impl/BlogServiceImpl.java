@@ -87,6 +87,16 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
     }
 
     @Override
+    public BlogDTO getBlogDTOById(Long id) {
+        BlogDO blog = blogMapper.selectById(id);
+        BlogDTO blogDTO = new BlogDTO();
+        BeanUtil.copyProperties(blog, blogDTO);
+        blogDTO.setCategory(categoryService.getById(blog.getCategoryId()));
+        blogDTO.setTagList(blogTagService.getTagListByBlogId(blog.getId()));
+        return blogDTO;
+    }
+
+    @Override
     public List<BlogDTO> listBlogInTag(Integer pageNum, Integer pageSize, Long tagId) {
         Page<BlogDO> page = new Page<>(pageNum, pageSize);
 
@@ -221,7 +231,6 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
             }
         }
     }
-
 
     @Override
     public Map<String, List<ArchiveDTO>> archiveBlog() {
