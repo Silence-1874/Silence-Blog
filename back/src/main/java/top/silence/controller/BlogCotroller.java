@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import top.silence.dto.BlogDTO;
 import top.silence.dto.Result;
+import top.silence.entity.BlogDO;
 import top.silence.service.BlogService;
 
 import javax.websocket.server.PathParam;
@@ -42,6 +43,14 @@ public class BlogCotroller {
     @GetMapping("/countBlog")
     private Result countBlog() {
         return Result.ok("成功获得文章总数", blogService.count());
+    }
+
+    @GetMapping("/blogView/{id}")
+    public Result addViews(@PathVariable("id") Long id) {
+        BlogDO blog = blogService.getById(id);
+        blog.setViews(blog.getViews() + 1);
+        blogService.updateById(blog);
+        return Result.ok("浏览量+1");
     }
 
 }

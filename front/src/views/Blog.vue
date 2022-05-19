@@ -127,7 +127,9 @@
             }
         },
         created() {
-            this.getBlog()
+            // 每次组件创建时当前文章浏览量加1
+            this.$axios.get("/blogView/" + this.blogId);
+            this.getBlog();
         },
         methods: {
             getBlog() {
