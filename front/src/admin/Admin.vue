@@ -113,7 +113,7 @@
                             {
                                 id: 41,
                                 title: '访问日志',
-                                path: '/admin/visitLog'
+                                path: '/admin/visitorLog'
                             }
                         ]
                     },
