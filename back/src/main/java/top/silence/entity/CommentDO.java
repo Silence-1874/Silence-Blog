@@ -68,6 +68,11 @@ public class CommentDO {
     private String ip;
 
     /**
+     * 评论者地理位置
+     */
+    private String city;
+
+    /**
      * 博主标识
      */
     private Boolean isAdmin;

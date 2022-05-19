@@ -50,6 +50,11 @@ public class CommentDTO {
     private Long  parentCommentId;
 
     /**
+     * 评论者地理位置
+     */
+    private String city;
+
+    /**
      * 博主标识
      */
     private Boolean isAdmin;

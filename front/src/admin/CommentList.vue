@@ -13,12 +13,12 @@
                   :header-cell-style="{background:'#eef1f6',color:'#606266'}"
                   stripe border style="margin-bottom: 15px; margin-top: 15px">
             <el-table-column label="序号" width="50" type="index" align="center"></el-table-column>
-            <el-table-column label="头像" width="70" align="center">
+            <el-table-column label="头像" width="80" align="center">
                 <template v-slot="scope">
                     <el-avatar shape="square" :size="50" fit="contain" :src="scope.row.avatar"></el-avatar>
                 </template>
             </el-table-column>
-            <el-table-column label="昵称" prop="nickname" align="center">
+            <el-table-column label="昵称" prop="nickname" width="100px" align="center">
                 <template v-slot="scope">
                     {{ scope.row.nickname }}
                     <el-tag v-if="scope.row.isAdmin" size="mini" effect="dark" style="margin-left: 5px">我</el-tag>
@@ -26,7 +26,8 @@
             </el-table-column>
             <el-table-column label="QQ" prop="qq" width="115" align="center"></el-table-column>
             <el-table-column label="评论内容" prop="content" show-overflow-tooltip align="center"></el-table-column>
-            <el-table-column label="IP" prop="ip" width="130" align="center"></el-table-column>
+            <el-table-column label="IP" prop="ip" width="120" align="center"></el-table-column>
+            <el-table-column label="地理位置" prop="city" width="110" align="center"></el-table-column>
             <el-table-column label="所属博客" show-overflow-tooltip align="center">
                 <template v-slot="scope">
                     <el-link type="success" :href="`/blog/${scope.row.blogId}`" target="_blank">{{ getBlogTitleById(scope.row.blogId) }}</el-link>
