@@ -3,15 +3,22 @@
         <h2 class="m-text-500" style="text-align: center">{{ title }}</h2>
         <el-divider></el-divider>
         <div class="typo content m-margin-top-large" v-html="content"></div>
+
+        <!--评论-->
+        <div class="ui bottom teal attached segment threaded comments">
+            <CommentList :blogId="0"></CommentList>
+        </div>
     </div>
 </template>
 
 <script>
     import {marked} from "marked";
     import hljs from "highlight.js";
+    import CommentList from "@/components/CommentList";
 
     export default {
         name: 'About',
+        components:{CommentList},
         data() {
             return {
                 title: '',

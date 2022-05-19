@@ -13,10 +13,6 @@
 		name: "CommentList",
 		components: {Comment, Pagination},
 		props: {
-			page: {
-				type: Number,
-				required: true
-			},
 			blogId: {
 				type: Number,
 				required: false

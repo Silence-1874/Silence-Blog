@@ -30,7 +30,8 @@
             <el-table-column label="地理位置" prop="city" width="110" align="center"></el-table-column>
             <el-table-column label="所属博客" show-overflow-tooltip align="center">
                 <template v-slot="scope">
-                    <el-link type="success" :href="`/blog/${scope.row.blogId}`" target="_blank">{{ getBlogTitleById(scope.row.blogId) }}</el-link>
+                    <el-link v-if="scope.row.blogId !== 0" type="success" :href="`/blog/${scope.row.blogId}`" target="_blank">{{ getBlogTitleById(scope.row.blogId) }}</el-link>
+                    <el-link v-if="scope.row.blogId === 0" type="success" :href="`/about`" target="_blank">关于我</el-link>
                 </template>
             </el-table-column>
             <el-table-column label="发表时间" width="170" align="center">
@@ -127,6 +128,7 @@
             getBlogList() {
                 this.$axios.get("/admin/blog/all").then(res => {
                     this.blogList = res.data.data;
+                    this.blogList.unshift({id: 0, title: '关于我'})
                 })
             },
 

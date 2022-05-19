@@ -57,7 +57,7 @@
         </div>
         <!--评论-->
         <div class="ui bottom teal attached segment threaded comments">
-            <CommentList :page="0" :blogId="blogId"></CommentList>
+            <CommentList :blogId="blogId"></CommentList>
         </div>
     </div>
 </template>
