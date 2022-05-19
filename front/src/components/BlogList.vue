@@ -8,13 +8,13 @@
             </div>
             <div class="ui middle aligned mobile reversed stackable">
                 <div class="ui grid m-margin-lr">
-                    <!--标题-->
+                    <!-- 标题 -->
                     <div class="row m-padded-tb-small">
                         <h2 class="ui header m-center m-scaleup">
                             <a href="javascript:;" @click.prevent="toBlog(blog)" class="m-black">{{ blog.title }}</a>
                         </h2>
                     </div>
-                    <!--文章简要信息-->
+                    <!-- 文章简要信息 -->
                     <div class="row m-padded-tb-small">
                         <div class="ui horizontal link list m-center">
                             <div class="item m-datetime">
@@ -31,21 +31,21 @@
                             </div>
                         </div>
                     </div>
-                    <!--分类-->
+                    <!-- 分类 -->
                     <router-link :to="`/category/${blog.category.categoryName}`" class="ui orange large ribbon label" style="margin-right: 0">
                         <i class="small folder open icon"></i>
                         <span class="m-text-500" v-text="blog.category.categoryName"></span>
                     </router-link>
-                    <!--文章Markdown描述-->
+                    <!-- 文章Markdown描述，截取正文的前200个字符-->
                     <div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces"
-                         v-html="blog.content"></div>
-                    <!--阅读全文按钮-->
+                         v-html="blog.content.substring(0, 200)"></div>
+                    <!-- 阅读全文按钮 -->
                     <div class="row m-padded-tb-small m-margin-top">
                         <a href="javascript:;" @click.prevent="toBlog(blog)" class="color-btn">阅读全文</a>
                     </div>
-                    <!--横线-->
+                    <!-- 横线 -->
                     <div class="ui section divider m-margin-lr-no"></div>
-                    <!--标签-->
+                    <!-- 标签 -->
                     <div class="row m-padded-tb-no">
                         <div class="column m-padding-left-no">
                             <router-link :to="`/tag/${tag.tagName}`" class="ui tag label m-text-500 m-margin-small"
@@ -108,7 +108,7 @@
             },
 
             toBlog(blog) {
-                this.$store.dispatch('', blog)
+                this.$router.push(`/blog/${blog.id}`)
             }
         }
     }
