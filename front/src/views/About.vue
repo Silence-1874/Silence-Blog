@@ -1,5 +1,5 @@
 <template>
-    <div class="ui top attached segment m-padded-lr-big">
+    <div class="ui top attached segment m-padded-lr-big;" style="background: #fffaf4">
         <h2 class="m-text-500" style="text-align: center">{{ title }}</h2>
         <el-divider></el-divider>
         <div class="typo content m-margin-top-large" v-html="content"></div>

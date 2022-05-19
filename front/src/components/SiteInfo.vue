@@ -6,14 +6,25 @@
         </div>
         <div class="ui blue segment m-padding-small">
             <div>
-                本网站已运行<br>
+                <div>
+                    <strong>本网站已运行</strong>
+                </div>
                 <!-- 暂且当每年是365天，每个月都是30天 -->
-                {{ durTime._data.years * 365 + durTime._data.months * 30 + durTime._data.days }} 天
-                {{ durTime._data.minutes }} 分
-                {{ durTime._data.seconds }} 秒
+                <div style="font-size: 20px; margin-top: 10px;">
+                    <el-tag effect="dark" style="font-size: 20px"> {{ durTime._data.years * 365 + durTime._data.months * 30 + durTime._data.days }} </el-tag> 天
+                    <el-tag effect="dark" style="font-size: 20px"> {{ durTime._data.minutes }} </el-tag> 分
+                    <el-tag effect="dark" style="font-size: 20px"> {{ durTime._data.seconds }} </el-tag> 秒
+                </div>
+                <br>
             </div>
-            <div> {{'总访问量: ' + pv}} </div>
-            <div> {{'总访客量: ' + uv}} </div>
+            <div>
+                <strong>总访问量:</strong>
+                <el-tag effect="dark" type="success" style="margin-left: 20px; font-size: 20px"> {{ pv }} </el-tag>
+            </div>
+            <div>
+                <strong>总访客量:</strong>
+                <el-tag effect="dark" type="danger" style="margin-left: 20px; margin-top: 15px; font-size: 20px"> {{ uv }} </el-tag>
+            </div>
         </div>
     </div>
 </template>
@@ -28,7 +39,7 @@
                 pv: 0,
                 uv: 0,
                 // 网站创建时间
-                createTime: moment("2022.6.1 00:00:00"),
+                createTime: moment("2022.5.10 00:00:00"),
                 durTime: ""
             }
         },

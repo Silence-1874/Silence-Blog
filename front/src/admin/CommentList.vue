@@ -9,7 +9,7 @@
             </el-col>
         </el-row>
 
-        <el-table :data="commentList" row-key="id" :tree-props="{children: 'replyComments'}"
+        <el-table :data="commentList" row-key="id"
                   :header-cell-style="{background:'#eef1f6',color:'#606266'}"
                   stripe border style="margin-bottom: 15px; margin-top: 15px">
             <el-table-column label="序号" width="50" type="index" align="center"></el-table-column>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="ui segments m-box">
-            <div class="ui card">
+            <div class="ui card" style="background: #fffaf4;">
                 <!-- 名片头像 -->
                 <div class="image">
                     <img :src="introduction.avatar">

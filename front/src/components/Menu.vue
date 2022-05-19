@@ -1,9 +1,9 @@
 <template>
     <div ref="menu" class="ui fixed inverted stackable pointing menu" :class="{'transparent':$route.name==='home' && clientSize.clientWidth > 768}"
-                    style="background: #031634">
+                    style="background: #2a4b8e">
         <div class="ui container">
             <router-link to="/">
-                <h2 class="ui header item" style="color: #6bc235; font-family: 微软雅黑" >
+                <h2 class="ui header item" style="color: #f65066; font-family: 微软雅黑" >
                     <span>Silence's Blog</span>
                 </h2>
             </router-link>
@@ -29,7 +29,8 @@
                 <i class="info icon"></i>关于我
             </router-link>
 
-            <el-autocomplete v-model="queryString" :fetch-suggestions="debounceQuery" placeholder="搜索文章标题或内容"
+            <!--<el-autocomplete v-model="queryString" :fetch-suggestions="debounceQuery" placeholder="搜索文章标题或内容"-->
+            <el-autocomplete v-model="queryString" :fetch-suggestions="debounceQuery" placeholder="搜索功能暂未实现"
                              class="right item m-search"
                              popper-class="m-search-item" @select="handleSelect">
                 <i class="search icon el-input__icon" slot="suffix"></i>

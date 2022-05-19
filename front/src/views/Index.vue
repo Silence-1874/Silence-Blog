@@ -8,7 +8,7 @@
             <Header></Header>
         </div>
 
-        <div class="main">
+        <div class="main" style="padding-top: 3em; padding-bottom: 3em;">
             <div class="m-padded-tb-big">
                 <div class="ui container">
                     <div class="ui stackable grid">

@@ -4,7 +4,7 @@
         <el-row :gutter="24" style="padding-top: 30px">
             <el-col :sm="8">
                 <el-row :gutter="24" class="footer-title">
-                    <el-col :span="24">
+                    <el-col :span="24" style="color: #f65066">
                         <br>联系<br><br>
                         博主
                     </el-col>
@@ -14,7 +14,7 @@
             <div style="border:1px solid ;float:left;height:100px;"></div>
             <el-col :sm="8">
                 <el-row :gutter="24" class="footer-title">
-                    <el-col :span="24">
+                    <el-col :span="24" style="color: #f65066">
                         <br>QQ<br><br>
                         2245815651
                     </el-col>
@@ -24,7 +24,7 @@
             <div style="border:1px solid; float:left; height:100px;"></div>
             <el-col :sm="7">
                 <el-row :gutter="24" class="footer-title">
-                    <el-col :span="24">
+                    <el-col :span="24" style="color: #f65066">
                         <br>邮箱<br><br>
                         silence1874@qq.com
                     </el-col>
@@ -59,7 +59,7 @@
         min-height: 20px;
         max-width: 100%;
         padding: 0 15px;
-        background-color: #031634;
+        background-color: #015c91;
         color: white !important;
         opacity: 0.9;
     }

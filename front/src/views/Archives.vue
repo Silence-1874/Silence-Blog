@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="ui top attached segment" style="text-align: center">
+        <div class="ui top attached segment" style="text-align: center;">
             <h2 class="m-text-500">文章归档</h2>
             <p>好! 目前共计 {{ count }} 篇日志。 继续努力。</p>
         </div>
@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="tl-header">
-                    <a class="ui black large label m-text-500">Hello World!</a>
+                    <a class="ui red large label m-text-500">Hello World!</a>
                 </div>
             </div>
         </div>
@@ -37,10 +37,10 @@
                 count: 0,
                 colorObj: {
                     0: 'tl-blue',
-                    1: 'tl-dark',
+                    1: 'tl-pink',
                     2: 'tl-green',
                     3: 'tl-purple',
-                    4: 'tl-red',
+                    4: 'tl-yellow',
                 }
             }
         },
@@ -123,47 +123,48 @@
     }
 
     .tl-blue .tl-header a, .tl-blue .tl-item .tl-title {
-        background: #23b7e5 !important;
+        background: #a0d8fd!important;
         color: #fff !important;
     }
 
     .tl-blue .tl-item .tl-wrap {
-        border-color: #23b7e5;
-    }
-
-    .tl-dark .tl-header a, .tl-dark .tl-item .tl-title {
-        background: #3a3f51 !important;
-        color: #fff !important;
-    }
-
-    .tl-dark .tl-item .tl-wrap {
-        border-color: #3a3f51;
+        border-color: #a0d8fd;
     }
 
     .tl-green .tl-header a, .tl-green .tl-item .tl-title {
-        background: #27c24c !important;
+        background: #9be99e !important;
         color: #fff !important;
     }
 
     .tl-green .tl-item .tl-wrap {
-        border-color: #27c24c;
+        border-color: #9be99e;
     }
 
     .tl-purple .tl-header a, .tl-purple .tl-item .tl-title {
-        background: #7266ba !important;
+        background: #d89ac9 !important;
         color: #fff !important;
     }
 
     .tl-purple .tl-item .tl-wrap {
-        border-color: #7266ba;
+        border-color: #d89ac9;
     }
 
-    .tl-red .tl-header a, .tl-red .tl-item .tl-title {
-        background: #f05050 !important;
+    .tl-pink .tl-header a, .tl-pink .tl-item .tl-title {
+        background: #ff7b89!important;
         color: #fff !important;
     }
 
-    .tl-red .tl-item .tl-wrap {
-        border-color: #f05050;
+    .tl-pink .tl-item .tl-wrap {
+        border-color: #ff7b89;
     }
+
+    .tl-yellow .tl-header a, .tl-yellow .tl-item .tl-title {
+        background: #fcdf67 !important;
+        color: #fff !important;
+    }
+
+    .tl-yellow .tl-item .tl-wrap {
+        border-color: #fcdf67;
+    }
+
 </style>
