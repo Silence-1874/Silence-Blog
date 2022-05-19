@@ -95,9 +95,9 @@ const routes = [
         }
       },
       {
-        path: 'visitLog',
-        name: 'adminVisitLog',
-        component: () => import('@/admin/VisitLog'),
+        path: 'visitorLog',
+        name: 'adminVisitorLog',
+        component: () => import('@/admin/VisitorLog'),
         meta: {
           title: '访问日志',
           requireAuth: true
