@@ -26,6 +26,7 @@
                         <div class="three wide column">
                             <!--只在文章页面显示目录-->
                             <Tocbot v-if="$route.name==='blog'"/>
+                            <SiteInfo></SiteInfo>
                             <Tags :tagList="tagList"></Tags>
                         </div>
                     </div>
@@ -46,10 +47,11 @@
     import Introduction from "@/components/Introduction";
     import Tags from "@/components/Tags";
     import Tocbot from "@/components/Tocbot";
+    import SiteInfo from "@/components/SiteInfo";
 
     export default {
         name: "Index",
-        components: {Header, Tocbot, Tags, Menu, Footer, Introduction},
+        components: {Header, Tocbot, Tags, Menu, Footer, Introduction, SiteInfo},
         data() {
             return {
                 categoryList: [],
