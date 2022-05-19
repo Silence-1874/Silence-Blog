@@ -60,6 +60,7 @@
                 })
             },
             toBlog(blog) {
+                this.$router.push(`/blog/${blog.id}`)
             }
         }
     }
