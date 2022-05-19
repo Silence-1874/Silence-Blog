@@ -13,7 +13,7 @@
                 {{ durTime._data.seconds }} 秒
             </div>
             <div> {{'总访问量: ' + pv}} </div>
-            <div> {{'访客量: ' + uv}} </div>
+            <div> {{'总访客量: ' + uv}} </div>
         </div>
     </div>
 </template>
@@ -38,16 +38,22 @@
                 setInterval(this.addSecond, 1000);
             });
         },
+        created() {
+            this.getPVAndUV();
+            this.getDurTime();
+        },
         beforeDestroy() {
             if (this.timer) {
                 // 在Vue实例销毁前，清除定时器
                 clearInterval(this.timer);
             }
         },
-
         methods: {
-            // TODO: 获取pv和uv
             getPVAndUV() {
+                this.$axios.get("/visitor/pvuv").then(res => {
+                    this.pv = res.data.data.pv;
+                    this.uv = res.data.data.uv;
+                })
             },
             // 计算网站运行时间
             getDurTime() {
@@ -62,10 +68,6 @@
         // 监听,当路由发生变化的时候执行
         watch: {
             '$route': 'getPVAndUV'
-        },
-        created() {
-            this.getPVAndUV();
-            this.getDurTime();
         }
     }
 </script>

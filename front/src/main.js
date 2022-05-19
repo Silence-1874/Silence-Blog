@@ -21,6 +21,13 @@ Vue.use(mavonEditor)
 
 Vue.prototype.$axios = axios
 
+// 每次路由更新时更新pv
+router.afterEach((to, from, next) => {
+  const ip = returnCitySN['cip'];
+  const city = returnCitySN['cname'];
+  axios.put("/visitor/pv/" + ip + "/" + city);
+})
+
 // 成功消息提示
 Vue.prototype.msgSuccess = function (msg) {
   this.$message.success(msg)
