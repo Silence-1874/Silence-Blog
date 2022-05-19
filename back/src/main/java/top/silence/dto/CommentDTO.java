@@ -1,30 +1,22 @@
-package top.silence.entity;
+package top.silence.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-/**
- * 评论信息
- * @author Silence
- * @date 2022/5/18 10:10
- */
-@TableName("comment")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDO {
+public class CommentDTO {
 
     /**
      * 主键Id
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -58,24 +50,19 @@ public class CommentDO {
     private Long  parentCommentId;
 
     /**
-     * 评论者QQ号
-     */
-    private String qq;
-
-    /**
-     * 评论者Ip
-     */
-    private String ip;
-
-    /**
      * 博主标识
      */
     private Boolean isAdmin;
 
+
     /**
-     * 逻辑删除
+     * 此评论的父评论昵称
      */
-    @TableLogic
-    private Boolean isDeleted;
+    private String parentCommentNickname;
+
+    /**
+     * 回复该评论的评论
+     */
+    private List<CommentDTO> replyComments = new ArrayList<>();
 
 }

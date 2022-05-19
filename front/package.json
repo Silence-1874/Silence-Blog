@@ -16,6 +16,7 @@
     "marked": "^4.0.15",
     "mavon-editor": "^2.10.4",
     "moment": "^2.29.3",
+    "sanitize-html": "^2.7.0",
     "sass-loader": "^8.0.2",
     "semantic-ui-css": "^2.4.1",
     "svg-sprite-loader": "^6.0.11",
