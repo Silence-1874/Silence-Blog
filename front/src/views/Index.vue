@@ -4,8 +4,8 @@
         <Menu :categoryList="categoryList"></Menu>
 
         <!--首页大图 只在首页展示-->
-        <div>
-            <Header v-if="$route.name==='home'"></Header>
+        <div class="header" v-if="$route.name==='home'">
+            <Header></Header>
         </div>
 
         <div class="main">
@@ -94,6 +94,10 @@
 </script>
 
 <style scoped>
+    .header {
+        height: 800px;
+    }
+
     .site {
         display: flex;
         min-height: 100vh; /* 没有元素时，也把页面撑开至100% */
