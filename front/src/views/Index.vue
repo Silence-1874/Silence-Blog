@@ -34,9 +34,13 @@
             </div>
         </div>
 
-        <!--页脚-->
-        <Footer/>
+        <!--回到顶部-->
+        <el-backtop style="box-shadow: none;background: none">
+            <i class="el-icon-download" style="font-size: 80px; transform: rotate(180deg);" ></i>
+        </el-backtop>
 
+        <!--页脚-->
+        <Footer></Footer>
     </div>
 </template>
 
