@@ -133,7 +133,6 @@
             },
 
             search() {
-                console.log(this.queryInfo)
                 this.queryInfo.pageNum = 1
                 this.queryInfo.pageSize = 10
                 this.getCommentList()

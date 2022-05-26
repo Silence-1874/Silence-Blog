@@ -242,11 +242,22 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
             calendar.setTime(createTime);
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH) + 1;
-            String key = year + "年" + month + "月";
-            String date = calendar.get(Calendar.DATE) + "日";
+            String key = year + "年";
+            if (month < 10) {
+                key += "0";
+            }
+            key += month + "月";
+            String date = "";
+            if (calendar.get(Calendar.DATE) < 10) {
+                date += "0";
+            }
+            date += calendar.get(Calendar.DATE) + "日";
             ArchiveDTO archiveDTO = new ArchiveDTO(blog.getId(), blog.getTitle(), date);
             map.put(key, map.getOrDefault(key, new ArrayList<>()));
             map.get(key).add(archiveDTO);
+        }
+        for (List<ArchiveDTO> list : map.values()) {
+            list.sort(Comparator.comparing(ArchiveDTO::getDay).reversed());
         }
         return map;
     }

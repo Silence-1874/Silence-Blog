@@ -48,7 +48,6 @@
         methods: {
             getData() {
                 this.$axios.get("/about").then(res => {
-                    console.log(res.data.data)
                     this.title = res.data.data.title;
                     this.content = marked.parse(res.data.data.content);
                 })

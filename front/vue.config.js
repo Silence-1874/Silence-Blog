@@ -4,9 +4,8 @@ function resolve(dir) {
     return path.join(__dirname, dir)
 }
 
-
-
 module.exports = {
+    publicPath: '/',
     //  省略其他配置
     chainWebpack(config) {
         // set svg-sprite-loader

@@ -5,25 +5,26 @@
             <i class="bar chart icon"></i> 统计信息
         </div>
         <div class="ui blue segment m-padding-small">
-            <div>
+            <div style="text-align: center">
                 <div>
-                    <strong>本网站已运行</strong>
+                    <strong style="font-size: 24px">本网站已运行</strong>
                 </div>
                 <!-- 暂且当每年是365天，每个月都是30天 -->
-                <div style="font-size: 20px; margin-top: 10px;">
-                    <el-tag effect="dark" style="font-size: 20px"> {{ durTime._data.years * 365 + durTime._data.months * 30 + durTime._data.days }} </el-tag> 天
-                    <el-tag effect="dark" style="font-size: 20px"> {{ durTime._data.minutes }} </el-tag> 分
-                    <el-tag effect="dark" style="font-size: 20px"> {{ durTime._data.seconds }} </el-tag> 秒
+                <div style="font-size: 10px; margin-top: 10px;">
+                    <el-tag effect="dark" style="font-size: 12px"> {{ durTime._data.years * 365 + durTime._data.months * 30 + durTime._data.days }} </el-tag> 天
+                    <el-tag effect="dark" style="font-size: 12px"> {{ durTime._data.hours }} </el-tag> 小时
+                    <el-tag effect="dark" style="font-size: 12px"> {{ durTime._data.minutes }} </el-tag> 分
+                    <el-tag effect="dark" style="font-size: 12px"> {{ durTime._data.seconds }} </el-tag> 秒
                 </div>
                 <br>
             </div>
             <div>
                 <strong>总访问量:</strong>
-                <el-tag effect="dark" type="success" style="margin-left: 20px; font-size: 20px"> {{ pv }} </el-tag>
+                <el-tag effect="dark" type="success" style="margin-left: 25px; font-size: 20px"> {{ pv }} </el-tag>
             </div>
             <div>
                 <strong>总访客量:</strong>
-                <el-tag effect="dark" type="danger" style="margin-left: 20px; margin-top: 15px; font-size: 20px"> {{ uv }} </el-tag>
+                <el-tag effect="dark" type="danger" style="margin-left: 25px; margin-top: 15px; font-size: 20px"> {{ uv }} </el-tag>
             </div>
         </div>
     </div>
@@ -39,7 +40,7 @@
                 pv: 0,
                 uv: 0,
                 // 网站创建时间
-                createTime: moment("2022.5.10 00:00:00"),
+                createTime: moment("2022.5.22 12:30:00"),
                 durTime: ""
             }
         },

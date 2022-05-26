@@ -88,7 +88,6 @@
                     if (valid) {
                         this.$axios.post("/login", this.loginForm).then(res => {
                             if (res.data.isSuccess) {
-                                console.log(res);
                                 this.$store.commit("SET_TOKEN_NAME", res.data.data.tokenName);
                                 this.$store.commit("SET_TOKEN_VALUE", res.data.data.tokenValue);
                                 this.$store.commit("SET_USERINFO", res.data.data.loginId);

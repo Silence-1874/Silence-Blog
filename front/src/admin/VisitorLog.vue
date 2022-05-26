@@ -37,27 +37,26 @@
             }
         },
         created() {
-            this.getDate();
+            this.getData();
         },
         methods: {
-            getDate() {
+            getData() {
                 this.$axios.get("/admin/visitor/" + this.queryInfo.pageNum + "/" + this.queryInfo.pageSize).then(res => {
                     this.visitorList = res.data.data.records;
                     this.total = res.data.data.total;
-                    console.log(this.visitorList)
                 })
             },
 
             // 监听单页大小改变事件
             handleSizeChange(newPageSize) {
                 this.queryInfo.pageSize = newPageSize;
-                this.getCommentList();
+                this.getData();
             },
 
             // 监听页码改变的事件
             handleNumChange(newPageNum) {
                 this.queryInfo.pageNum = newPageNum;
-                this.getCommentList();
+                this.getData();
             }
         }
     }
