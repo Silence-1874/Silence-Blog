@@ -2,7 +2,8 @@
     <header ref="header">
         <!-- 首页图片 -->
         <div class="view">
-            <div class="bg" style="background-image: url('https://s2.loli.net/2022/05/10/4KGo1A65JvDfIpt.jpg');"></div>
+            <div class="bg" style="background-image: url(../../public/background.jpg);"></div>
+            <img :src="bg">
         </div>
 
         <!-- 首页文字 -->
@@ -25,7 +26,8 @@
         name: "Header",
         data() {
             return {
-                loaded: false
+                loaded: false,
+                bg: require('../../public/background.jpg')
             }
         },
         computed: {
