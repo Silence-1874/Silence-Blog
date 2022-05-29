@@ -11,6 +11,7 @@
     "copy-webpack-plugin": "^6.0.3",
     "core-js": "^3.8.3",
     "element-ui": "^2.15.8",
+    "github-markdown-css": "^5.1.0",
     "highlight.js": "^11.5.1",
     "jquery": "^3.6.0",
     "marked": "^4.0.15",

@@ -13,7 +13,9 @@ import './util/dateFormatUtil.js'
 import './css/base.css'
 import './icons'
 import './permission'
-import 'highlight.js/styles/atom-one-dark.css'
+import 'highlight.js/styles/github.css'
+import 'github-markdown-css/github-markdown-light.css'
+import './css/github-mardown.css'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

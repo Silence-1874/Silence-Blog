@@ -32,7 +32,7 @@
                         <i class="small folder open icon"></i><span class="m-text-500">{{ blog.category.categoryName }}</span>
                     </router-link>
                     <!--文章Markdown正文-->
-                    <div class="typo js-toc-content m-padded-tb-small match-braces rainbow-braces" v-html="blog.content"></div>
+                    <div class="typo js-toc-content m-padded-tb-small match-braces rainbow-braces markdown-body" v-html="blog.content"></div>
                     <!--横线-->
                     <el-divider></el-divider>
                     <!--标签-->
