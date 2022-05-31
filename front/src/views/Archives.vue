@@ -6,11 +6,11 @@
         </div>
         <div class="ui attached segment">
             <div class="timeline">
-                <div :class="colorObj[index%5]" v-for="(value,key,index) in blogMap" :key="index">
+                <div :class="colorObj[key%5]" v-for="(value,key) in blogMap" :key="value[0]">
                     <div class="tl-header">
-                        <a class="ui large label m-text-500">{{ key }}</a>
+                        <a class="ui large label m-text-500">{{ value[0] }}</a>
                     </div>
-                    <div class="tl-item" v-for="blog in value" :key="blog.id">
+                    <div class="tl-item" v-for="blog in value[1]" :key="blog.id">
                         <div class="tl-wrap">
                             <span class="tl-date">{{ blog.day }}</span>
                             <a href="javascript:;" @click.prevent="toBlog(blog)">
@@ -33,7 +33,7 @@
         name: "Archives",
         data() {
             return {
-                blogMap: {},
+                blogMap: [],
                 count: 0,
                 colorObj: {
                     0: 'tl-blue',
@@ -51,7 +51,9 @@
         methods: {
             getArchives() {
                 this.$axios.get("/archives").then(res => {
-                    this.blogMap = res.data.data;
+                    var list = Object.entries(res.data.data);
+                    list.sort((a, b) => b[0].localeCompare(a[0]))
+                    this.blogMap = list;
                 })
             },
             getCount() {
