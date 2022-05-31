@@ -27,10 +27,10 @@
                     <a class="site-icon" href="https://www.zhihu.com/people/xie-lin-feng-63-55" style="margin-right: 10px">
                         <svg-icon icon-class="zhihu"></svg-icon>
                     </a>
-                    <a class="site-icon" href="https://www.douban.com/people/181279082/?_i=2699943nzmqZw5">
+                    <a class="site-icon" href="https://www.douban.com/people/181279082">
                         <svg-icon icon-class="douban"></svg-icon>
                     </a>
-                    <a class="site-icon" href="https://space.bilibili.com/111044705?spm_id_from=333.1007.0.0">
+                    <a class="site-icon" href="https://space.bilibili.com/111044705">
                         <svg-icon icon-class="bilibili"></svg-icon>
                     </a>
                     <a class="site-icon" href="https://juejin.cn/user/4372134640489560" style="margin-right: 10px">
