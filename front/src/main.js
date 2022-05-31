@@ -25,9 +25,12 @@ Vue.prototype.$axios = axios
 
 // 每次路由更新时更新pv
 router.afterEach((to, from, next) => {
-  const ip = returnCitySN['cip'];
-  const city = returnCitySN['cname'];
-  axios.put("/visitor/pv/" + ip + "/" + city);
+  // 博主本人不贡献pv
+  if (localStorage.getItem("userInfo") !== 'admin') {
+    const ip = returnCitySN['cip'];
+    const city = returnCitySN['cname'];
+    axios.put("/visitor/pv/" + ip + "/" + city);
+  }
 })
 
 // 成功消息提示

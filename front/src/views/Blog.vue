@@ -127,8 +127,10 @@
             }
         },
         created() {
-            // 每次组件创建时当前文章浏览量加1
-            this.$axios.get("/blogView/" + this.blogId);
+            // 每次组件创建时当前文章浏览量加1，博主本人不贡献浏览量
+            if (localStorage.getItem("userInfo") !== 'admin') {
+                this.$axios.get("/blogView/" + this.blogId);
+            }
             this.getBlog();
         },
         methods: {
