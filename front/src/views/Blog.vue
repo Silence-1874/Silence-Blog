@@ -19,10 +19,10 @@
                             <div class="item m-views">
                                 <i class="small eye icon"></i><span>{{ blog.views }}</span>
                             </div>
-                            <div class="item m-common-black">
+                            <div class="item" style="color: #0eb389">
                                 <i class="small pencil alternate icon"></i><span>字数≈{{ blog.words }}字</span>
                             </div>
-                            <div class="item m-common-black">
+                            <div class="item" style="color: #ffaa00">
                                 <i class="small clock icon"></i><span>阅读时长≈{{ blog.readTime }}分</span>
                             </div>
                         </div>
