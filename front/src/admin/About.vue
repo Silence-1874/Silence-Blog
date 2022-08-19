@@ -6,7 +6,7 @@
             </el-form-item>
 
             <el-form-item label="正文" prop="content">
-                <mavon-editor v-model="form.content" style="max-width: none; padding: 0;"/>
+                <mavon-editor id="_mavon" v-model="form.content"/>
             </el-form-item>
 
             <el-form-item style="text-align: right;">
@@ -59,5 +59,8 @@
 </script>
 
 <style scoped>
-
+    #_mavon {
+        max-width: none!important;
+        padding: 0!important;
+    }
 </style>
