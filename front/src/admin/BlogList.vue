@@ -19,7 +19,11 @@
                   :header-cell-style="{background:'#eef1f6',color:'#606266'}"
                   stripe border style="margin-bottom: 15px; margin-top: 15px">
             <el-table-column label="序号" type="index" width="50" align="center"></el-table-column>
-            <el-table-column label="标题" prop="title" show-overflow-tooltip align="center"></el-table-column>
+            <el-table-column label="标题" prop="title" show-overflow-tooltip align="center">
+                <template v-slot="scope">
+                    <el-link v-if="scope.row.blogId !== 0" type="success" :href="`/blog/${scope.row.id}`" target="_blank">{{ getBlogTitleById(scope.row.id) }}</el-link>
+                </template>
+            </el-table-column>
             <el-table-column label="分类" prop="categoryId" :formatter="getCategoryNameById" width="150" align="center"></el-table-column>
             <el-table-column label="浏览量" prop="views" width="150" align="center"></el-table-column>
 
@@ -147,6 +151,14 @@
             handleNumChange(newPageNum) {
                 this.queryInfo.pageNum = newPageNum;
                 this.getData();
+            },
+
+            getBlogTitleById(id) {
+                for (const blog of this.blogList) {
+                    if (id === blog.id) {
+                        return blog.title;
+                    }
+                }
             },
         }
     }

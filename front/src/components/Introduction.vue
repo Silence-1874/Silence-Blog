@@ -21,19 +21,19 @@
 
                 <!-- 网站图标及链接 -->
                 <div class="extra content" align="center" style="font-size: 24px">
-                    <a class="site-icon" href="https://github.com/Silence-Zoe">
+                    <a class="site-icon" href="https://github.com/Silence-Zoe" target="_blank">
                         <svg-icon icon-class="github"></svg-icon>
                     </a>
-                    <a class="site-icon" href="https://www.zhihu.com/people/xie-lin-feng-63-55" style="margin-right: 10px">
+                    <a class="site-icon" href="https://www.zhihu.com/people/xie-lin-feng-63-55" target="_blank" style="margin-right: 10px">
                         <svg-icon icon-class="zhihu"></svg-icon>
                     </a>
-                    <a class="site-icon" href="https://www.douban.com/people/181279082">
+                    <a class="site-icon" href="https://www.douban.com/people/181279082" target="_blank">
                         <svg-icon icon-class="douban"></svg-icon>
                     </a>
-                    <a class="site-icon" href="https://space.bilibili.com/111044705">
+                    <a class="site-icon" href="https://space.bilibili.com/111044705" target="_blank">
                         <svg-icon icon-class="bilibili"></svg-icon>
                     </a>
-                    <a class="site-icon" href="https://juejin.cn/user/4372134640489560" style="margin-right: 10px">
+                    <a class="site-icon" href="https://juejin.cn/user/4372134640489560" target="_blank" style="margin-right: 10px">
                         <svg-icon icon-class="juejin"></svg-icon>
                     </a>
                 </div>

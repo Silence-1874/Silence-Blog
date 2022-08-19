@@ -13,7 +13,7 @@
                     <div class="tl-item" v-for="blog in value[1]" :key="blog.id">
                         <div class="tl-wrap">
                             <span class="tl-date">{{ blog.day }}</span>
-                            <a href="javascript:;" @click.prevent="toBlog(blog)">
+                            <a :href="'/blog/' + blog.id" @click.prevent="toBlog(blog)">
                                 <div class="ui left pointing label tl-title">{{ blog.title }}</div>
                             </a>
                         </div>
@@ -62,7 +62,10 @@
                 })
             },
             toBlog(blog) {
-                this.$router.push(`/blog/${blog.id}`)
+                const routeData = this.$router.resolve({
+                    path: '/blog/' + blog.id,
+                });
+                window.open(routeData.href, '_blank');
             }
         }
     }

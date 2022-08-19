@@ -42,7 +42,7 @@
                          v-html="blog.description"></div>
                     <!-- 阅读全文按钮 -->
                     <div class="row m-padded-tb-small m-margin-top">
-                        <a href="javascript:;" @click.prevent="toBlog(blog)" class="color-btn">阅读全文</a>
+                        <a :href="'/blog/' + blog.id" @click.prevent="toBlog(blog)" class="color-btn">阅读全文</a>
                     </div>
                     <!-- 横线 -->
                     <div class="ui section divider m-margin-lr-no"></div>
@@ -109,7 +109,10 @@
             },
 
             toBlog(blog) {
-                this.$router.push(`/blog/${blog.id}`)
+                const routeData = this.$router.resolve({
+                    path: '/blog/' + blog.id,
+                });
+                window.open(routeData.href, '_blank');
             }
         }
     }
