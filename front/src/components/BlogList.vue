@@ -37,9 +37,9 @@
                         <i class="small folder open icon"></i>
                         <span class="m-text-500" v-text="blog.category.categoryName"></span>
                     </router-link>
-                    <!-- 文章Markdown描述，截取正文的前200个字符-->
-                    <div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces markdown-body"
-                         v-html="blog.content.substring(0, 200)"></div>
+                    <!-- 文章简介 -->
+                    <div class="typo m-padded-tb-small line-numbers match-braces rainbow-braces"
+                         v-html="blog.description"></div>
                     <!-- 阅读全文按钮 -->
                     <div class="row m-padded-tb-small m-margin-top">
                         <a href="javascript:;" @click.prevent="toBlog(blog)" class="color-btn">阅读全文</a>

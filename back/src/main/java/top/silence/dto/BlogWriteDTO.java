@@ -29,9 +29,9 @@ public class BlogWriteDTO {
     private String title;
 
     /**
-     * 首图url
+     * 描述
      */
-    private String url;
+    private String description;
 
     /**
      * 正文

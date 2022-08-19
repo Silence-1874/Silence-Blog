@@ -8,8 +8,8 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="文章首图URL" prop="url">
-                        <el-input v-model="form.url" placeholder="请输入文章首图的url"></el-input>
+                    <el-form-item label="文章简介" prop="description">
+                        <el-input v-model="form.description" placeholder="请输入简介"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -57,7 +57,7 @@
                 dialogVisible: false,
                 form: {
                     title: '',
-                    url: '',
+                    description: '',
                     content: '',
                     category: null,
                     tagList: [],
@@ -99,7 +99,7 @@
                 this.$axios.get("/admin/blog/" + id).then(res => {
                     const dto = res.data.data;
                     this.form.title = dto.title;
-                    this.form.url = dto.url;
+                    this.form.description = dto.description;
                     this.form.content = dto.content;
                     this.getCategoryById(dto.categoryId);
                     this.getTagListById(id);

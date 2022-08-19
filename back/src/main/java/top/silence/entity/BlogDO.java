@@ -30,10 +30,9 @@ public class BlogDO {
     private String title;
 
     /**
-     * 首图url
+     * 简介
      */
-    @TableField("first_picture")
-    private String url;
+    private String description;
 
     /**
      * 正文

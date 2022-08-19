@@ -121,7 +121,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
     @Override
     public Long saveBlog(BlogWriteDTO blogWriteDTO) {
         String title = blogWriteDTO.getTitle();
-        String url = blogWriteDTO.getUrl();
+        String description = blogWriteDTO.getDescription();
         String content = blogWriteDTO.getContent();
         Date createTime = new Date();
         Date updateTime = createTime;
@@ -150,7 +150,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
         }
 
         // 创建博客
-        BlogDO blog = new BlogDO(null, title, url, content, createTime, updateTime, views, words, readTime, blogCategory.getId(), isTop, isDeleted);
+        BlogDO blog = new BlogDO(null, title, description, content, createTime, updateTime, views, words, readTime, blogCategory.getId(), isTop, isDeleted);
         blogMapper.insert(blog);
 
         // 建立博客与标签的映射关系
@@ -162,7 +162,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
     public Long updateBlog(BlogWriteDTO blogWriteDTO, Long id) {
         BlogDO blog = getById(id);
         blog.setTitle(blogWriteDTO.getTitle());
-        blog.setUrl(blogWriteDTO.getUrl());
+        blog.setDescription(blogWriteDTO.getDescription());
         blog.setContent(blogWriteDTO.getContent());
         CategoryDO blogCategory = blogWriteDTO.getCategory();
         List<TagDO> blogTagList = blogWriteDTO.getTagList();
