@@ -42,7 +42,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
     private BlogTagService blogTagService;
 
     @Override
-    public Page<BlogDO> searchBlog(Integer pageNum, Integer pageSize, Long categoryId, String title) {
+    public Page<BlogDO> pageByQuery(Integer pageNum, Integer pageSize, Long categoryId, String title) {
         Page<BlogDO> page = new Page<>(pageNum, pageSize);
         QueryWrapper<BlogDO> queryWrapper= new QueryWrapper<>();
         if (categoryId != null) {
@@ -58,7 +58,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
     }
 
     @Override
-    public List<BlogDTO> listBlog(Integer pageNum, Integer pageSize, Long categoryId) {
+    public List<BlogDTO> page(Integer pageNum, Integer pageSize, Long categoryId) {
         Page<BlogDO> page = new Page<>(pageNum, pageSize);
         QueryWrapper<BlogDO> queryWrapper= new QueryWrapper<>();
         if (categoryId != null) {
@@ -80,27 +80,27 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
             blogDTO.setTotalPage(pages.getPages());
             blogDTO.setTotalRecords(pages.getTotal());
             blogDTO.setCategory(categoryService.getById(blog.getCategoryId()));
-            blogDTO.setTagList(blogTagService.getTagListByBlogId(blog.getId()));
+            blogDTO.setTagList(blogTagService.listTagByBlogId(blog.getId()));
             newList.add(blogDTO);
         }
         return newList;
     }
 
     @Override
-    public BlogDTO getBlogDTOById(Long id) {
+    public BlogDTO getDtoById(Long id) {
         BlogDO blog = blogMapper.selectById(id);
         BlogDTO blogDTO = new BlogDTO();
         BeanUtil.copyProperties(blog, blogDTO);
         blogDTO.setCategory(categoryService.getById(blog.getCategoryId()));
-        blogDTO.setTagList(blogTagService.getTagListByBlogId(blog.getId()));
+        blogDTO.setTagList(blogTagService.listTagByBlogId(blog.getId()));
         return blogDTO;
     }
 
     @Override
-    public List<BlogDTO> listBlogInTag(Integer pageNum, Integer pageSize, Long tagId) {
+    public List<BlogDTO> pageByTagId(Integer pageNum, Integer pageSize, Long tagId) {
         Page<BlogDO> page = new Page<>(pageNum, pageSize);
 
-        List<BlogDO> list = blogMapper.pageList(page, tagId);
+        List<BlogDO> list = blogMapper.pageByTag(page, tagId);
         List<BlogDTO> newList = new ArrayList<>(list.size());
 
         Long total = blogMapper.countBlogInTag(tagId);
@@ -111,7 +111,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
             blogDTO.setTotalPage(total / pageSize + 1);
             blogDTO.setTotalRecords(total);
             blogDTO.setCategory(categoryService.getById(blog.getCategoryId()));
-            blogDTO.setTagList(blogTagService.getTagListByBlogId(blog.getId()));
+            blogDTO.setTagList(blogTagService.listTagByBlogId(blog.getId()));
             newList.add(blogDTO);
         }
         return newList;
@@ -119,7 +119,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
 
 
     @Override
-    public Long saveBlog(BlogWriteDTO blogWriteDTO) {
+    public Long add(BlogWriteDTO blogWriteDTO) {
         String title = blogWriteDTO.getTitle();
         String description = blogWriteDTO.getDescription();
         String content = blogWriteDTO.getContent();
@@ -154,12 +154,12 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
         blogMapper.insert(blog);
 
         // 建立博客与标签的映射关系
-        blogTagService.mapBlogTag(blog.getId(), blogWriteDTO.getTagList());
+        blogTagService.addMapBlogWithTags(blog.getId(), blogWriteDTO.getTagList());
         return blog.getId();
     }
 
     @Override
-    public Long updateBlog(BlogWriteDTO blogWriteDTO, Long id) {
+    public Long updateById(BlogWriteDTO blogWriteDTO, Long id) {
         BlogDO blog = getById(id);
         blog.setTitle(blogWriteDTO.getTitle());
         blog.setDescription(blogWriteDTO.getDescription());
@@ -190,14 +190,14 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
         }
         // 更新标签
         List<Long> newList = blogWriteDTO.getTagList().stream().map(TagDO::getId).collect(Collectors.toList());
-        List<Long> oldList = blogTagService.getTagIdListByBlogId(id);
+        List<Long> oldList = blogTagService.listTagIdByBlogId(id);
         updateTagList(id, newList, oldList);
         blogMapper.updateById(blog);
         return null;
     }
 
     @Override
-    public void deleteBlog(Long id) {
+    public void deleteById(Long id) {
         BlogDO blog = blogMapper.selectById(id);
 
         // 更新修改时间
@@ -205,9 +205,9 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
         blogMapper.updateById(blog);
 
         // 删除该博客所有的标签映射信息
-        List<Long> tagIdList = blogTagService.getTagIdListByBlogId(id);
+        List<Long> tagIdList = blogTagService.listTagIdByBlogId(id);
         for (Long tagId : tagIdList) {
-            blogTagService.deleteBlogTag(id, tagId);
+            blogTagService.deleteMapBlogIdWithTagId(id, tagId);
         }
 
         // TODO: 删除博客下所有的评论
@@ -221,19 +221,19 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, BlogDO> implements 
         // 删除标签
         for (Long id : oldSet) {
             if (!newSet.contains(id)) {
-                blogTagService.deleteBlogTag(blogId, id);
+                blogTagService.deleteMapBlogIdWithTagId(blogId, id);
             }
         }
         // 新增标签
         for (Long id : newSet) {
             if (!oldSet.contains(id)) {
-                blogTagService.insertBlogTag(blogId, id);
+                blogTagService.addMapBlogIdWithTagId(blogId, id);
             }
         }
     }
 
     @Override
-    public Map<String, List<ArchiveDTO>> archiveBlog() {
+    public Map<String, List<ArchiveDTO>> archive() {
         Map<String, List<ArchiveDTO>> map = new HashMap<>();
         List<BlogDO> blogList = list();
         for (BlogDO blog : blogList) {

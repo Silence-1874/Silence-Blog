@@ -28,7 +28,7 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTagDO> im
     private TagMapper tagMapper;
 
     @Override
-    public void mapBlogTag(Long blogId, List<TagDO> tagList) {
+    public void addMapBlogWithTags(Long blogId, List<TagDO> tagList) {
         List<BlogTagDO> blogTagDOList = blogTagMapper.selectList(null);
         List<Long> list = blogTagDOList.stream()
                 .filter(i -> i.getBlogId().equals(blogId))
@@ -46,7 +46,7 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTagDO> im
     }
 
     @Override
-    public List<Long> getTagIdListByBlogId(Long blogId) {
+    public List<Long> listTagIdByBlogId(Long blogId) {
         Map<String, Object> map = new HashMap<>();
         map.put("blog_id", blogId);
         List<BlogTagDO> list = blogTagMapper.selectByMap(map);
@@ -55,7 +55,7 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTagDO> im
     }
 
     @Override
-    public List<TagDO> getTagListByBlogId(Long blogId) {
+    public List<TagDO> listTagByBlogId(Long blogId) {
         Map<String, Object> map = new HashMap<>();
         map.put("blog_id", blogId);
         List<BlogTagDO> list = blogTagMapper.selectByMap(map);
@@ -66,7 +66,7 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTagDO> im
     }
 
     @Override
-    public Boolean deleteBlogTag(Long blogId, Long tagId) {
+    public Boolean deleteMapBlogIdWithTagId(Long blogId, Long tagId) {
         Map<String, Object> map = new HashMap<>();
         map.put("blog_id", blogId);
         map.put("tag_id", tagId);
@@ -75,8 +75,8 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTagDO> im
     }
 
     @Override
-    public Boolean insertBlogTag(Long blogId, Long tagId) {
-        List<Long> tagIdList = getTagIdListByBlogId(blogId);
+    public Boolean addMapBlogIdWithTagId(Long blogId, Long tagId) {
+        List<Long> tagIdList = listTagIdByBlogId(blogId);
         if (!tagIdList.contains(tagId)) {
             blogTagMapper.insert(new BlogTagDO(blogId, tagId));
             return true;

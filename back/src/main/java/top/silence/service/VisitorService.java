@@ -13,19 +13,19 @@ public interface VisitorService extends IService<VisitorDO> {
      * @author Silence
      * @date 2022/5/19 17:15
      */
-    void updatePV(String ip, String city);
+    void updatePvByIp(String ip, String city);
 
     /**
      * 获得pv：所有访客的uv总和
      * @author Silence
      * @date 2022/5/19 17:37
      */
-    Integer getPV();
+    Integer getPv();
 
     /**
      * 获得uv：不同ip的访客数
      * @author Silence
      * @date 2022/5/19 17:36
      */
-    Integer getUV();
+    Integer getUv();
 }

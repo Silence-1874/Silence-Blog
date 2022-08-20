@@ -19,7 +19,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryDO>
     private CategoryMapper categoryMapper;
 
     @Override
-    public Page<CategoryDO> listCategory(Integer pageNum, Integer pageSize) {
+    public Page<CategoryDO> page(Integer pageNum, Integer pageSize) {
         Page<CategoryDO> page = new Page<>(pageNum, pageSize);
         return categoryMapper.selectPage(page, null);
     }

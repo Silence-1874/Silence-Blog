@@ -19,10 +19,10 @@ import java.util.List;
 public class VisitorServiceImpl extends ServiceImpl<VisitorMapper, VisitorDO> implements VisitorService {
 
     @Autowired
-    VisitorMapper visitorMapper;
+    private VisitorMapper visitorMapper;
 
     @Override
-    public void updatePV(String ip, String city) {
+    public void updatePvByIp(String ip, String city) {
         QueryWrapper<VisitorDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("ip", ip);
         VisitorDO visitorDO = visitorMapper.selectOne(queryWrapper);
@@ -39,7 +39,7 @@ public class VisitorServiceImpl extends ServiceImpl<VisitorMapper, VisitorDO> im
     }
 
     @Override
-    public Integer getPV() {
+    public Integer getPv() {
         List<VisitorDO> visitors = visitorMapper.selectList(null);
         int pv = 0;
         for (VisitorDO visitor : visitors) {
@@ -49,7 +49,7 @@ public class VisitorServiceImpl extends ServiceImpl<VisitorMapper, VisitorDO> im
     }
 
     @Override
-    public Integer getUV() {
+    public Integer getUv() {
         return Math.toIntExact(visitorMapper.selectCount(null));
     }
 }

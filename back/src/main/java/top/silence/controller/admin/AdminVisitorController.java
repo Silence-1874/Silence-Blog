@@ -14,10 +14,10 @@ import top.silence.service.VisitorService;
 public class AdminVisitorController {
 
     @Autowired
-    VisitorService visitorService;
+    private VisitorService visitorService;
 
     @GetMapping("/visitor/{pageNum}/{pageSize}")
-    public Result listVisitor(@PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize) {
+    public Result page(@PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize) {
         Page<VisitorDO> page = new Page<>(pageNum, pageSize);
         return Result.ok("成功获得访客列表", visitorService.page(page));
     }

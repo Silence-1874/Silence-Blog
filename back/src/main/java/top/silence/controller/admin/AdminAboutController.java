@@ -17,14 +17,14 @@ public class AdminAboutController {
     private AboutService aboutService;
 
     @GetMapping("/about")
-    private Result getAbout() {
+    public Result get() {
         AboutDO about = aboutService.getById(1);
         return Result.ok("'关于我'请求成功", about);
     }
 
     @SaCheckRole("admin")
     @PutMapping("/about")
-    private Result updateAbout(@RequestBody AboutDO about) {
+    public Result update(@RequestBody AboutDO about) {
         aboutService.updateById(about);
         return Result.ok("'关于我'修改成功", about);
     }

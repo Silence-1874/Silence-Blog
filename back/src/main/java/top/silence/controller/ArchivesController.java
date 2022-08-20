@@ -14,11 +14,11 @@ import java.util.Map;
 public class ArchivesController {
 
     @Autowired
-    BlogService blogService;
+    private BlogService blogService;
 
     @GetMapping("/archives")
-    private Result getArchives() {
-        Map<String, List<ArchiveDTO>> archive = blogService.archiveBlog();
+    public Result archive() {
+        Map<String, List<ArchiveDTO>> archive = blogService.archive();
         return Result.ok("成功获得博客归档信息", archive);
     }
 

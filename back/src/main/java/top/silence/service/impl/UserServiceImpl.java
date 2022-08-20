@@ -19,7 +19,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
     private UserMapper userMapper;
 
     @Override
-    public String getPassword(String username) {
+    public String getPasswordByUsername(String username) {
         QueryWrapper<UserDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username);
         UserDO user = userMapper.selectOne(queryWrapper);

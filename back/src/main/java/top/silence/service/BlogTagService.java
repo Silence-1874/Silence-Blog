@@ -17,33 +17,33 @@ public interface BlogTagService extends IService<BlogTagDO> {
      * @author Silence
      * @date 2022/5/13 9:37
      */
-    void mapBlogTag(Long blogId, List<TagDO> tagList);
+    void addMapBlogWithTags(Long blogId, List<TagDO> tagList);
 
     /**
      * 根据博客Id返回其下的标签Id列表
      * @author Silence
      * @date 2022/5/13 16:05
      */
-    List<Long> getTagIdListByBlogId(Long blogId);
+    List<Long> listTagIdByBlogId(Long blogId);
 
     /**
      * 根据博客Id返回其下的标签列表
      * @author Silence
      * @date 2022/5/17 11:33
      */
-    List<TagDO> getTagListByBlogId(Long blogId);
+    List<TagDO> listTagByBlogId(Long blogId);
 
     /**
      * 删除博客Id和标签Id的某条对应关系
      * @author Silence
      * @date 2022/5/13 16:55
      */
-    Boolean deleteBlogTag(Long blogId, Long tagId);
+    Boolean deleteMapBlogIdWithTagId(Long blogId, Long tagId);
 
     /**
      * 新建一条博客Id和标签Id的对应关系
      * @author Silence
      * @date 2022/5/13 20:03
      */
-    Boolean insertBlogTag(Long blogId, Long tagId);
+    Boolean addMapBlogIdWithTagId(Long blogId, Long tagId);
 }

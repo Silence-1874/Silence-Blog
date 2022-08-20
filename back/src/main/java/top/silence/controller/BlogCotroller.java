@@ -19,34 +19,34 @@ public class BlogCotroller {
     private BlogService blogService;
 
     @GetMapping("/blog")
-    public Result listBlog(@PathParam("pageNum") Integer pageNum,
+    public Result page(@PathParam("pageNum") Integer pageNum,
                            @PathParam("pageSize") Integer pageSize,
                            @PathParam("categoryId") Long categoryId) {
-        List<BlogDTO> list = blogService.listBlog(pageNum, pageSize, categoryId);
+        List<BlogDTO> list = blogService.page(pageNum, pageSize, categoryId);
         return Result.ok("成功获得博客分页数据", list);
     }
 
     @GetMapping("/blog/{id}")
-    public Result getBlogDTOById(@PathVariable("id") Long id) {
-        BlogDTO blogDTO = blogService.getBlogDTOById(id);
+    public Result getDtoById(@PathVariable("id") Long id) {
+        BlogDTO blogDTO = blogService.getDtoById(id);
         return Result.ok("成功获得博客数据", blogDTO);
     }
 
     @GetMapping("/blogInTag")
-    public Result listTagInTag(@PathParam("pageNum") Integer pageNum,
+    public Result pageByTagId(@PathParam("pageNum") Integer pageNum,
                                @PathParam("pageSize") Integer pageSize,
                                @PathParam("tagId") Long tagId) {
-        List<BlogDTO> list = blogService.listBlogInTag(pageNum, pageSize, tagId);
+        List<BlogDTO> list = blogService.pageByTagId(pageNum, pageSize, tagId);
         return Result.ok("成功获得当前标签下的博客", list);
     }
 
     @GetMapping("/countBlog")
-    private Result countBlog() {
+    public Result count() {
         return Result.ok("成功获得文章总数", blogService.count());
     }
 
-    @GetMapping("/blogView/{id}")
-    public Result addViews(@PathVariable("id") Long id) {
+    @GetMapping("/increaseViewById/{id}")
+    public Result increaseViewById(@PathVariable("id") Long id) {
         BlogDO blog = blogService.getById(id);
         blog.setViews(blog.getViews() + 1);
         blogService.updateById(blog);

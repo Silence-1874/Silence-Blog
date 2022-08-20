@@ -14,14 +14,14 @@ import top.silence.service.UserService;
 public class AdminLoginController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @PostMapping("/login")
     public Result login(@RequestBody LoginDTO loginDTO) {
         String username = loginDTO.getUsername();
         String password = DigestUtil.md5Hex(loginDTO.getPassword());
 
-        if (password.equals(userService.getPassword(username))) {
+        if (password.equals(userService.getPasswordByUsername(username))) {
             // 标记当前会话登录的帐号Id
             StpUtil.login(username);
             return Result.ok("登录成功", StpUtil.getTokenInfo());

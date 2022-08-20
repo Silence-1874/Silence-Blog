@@ -14,6 +14,6 @@ public interface UserService extends IService<UserDO> {
      * @author Silence
      * @date 2022/5/15 10:40
      */
-    String getPassword(String username);
+    String getPasswordByUsername(String username);
 
 }

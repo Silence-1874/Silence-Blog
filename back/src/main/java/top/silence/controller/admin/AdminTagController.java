@@ -18,14 +18,14 @@ public class AdminTagController {
     private TagService tagService;
 
     @GetMapping("/tag/{pageNum}/{pageSize}")
-    private Result listTag(@PathVariable Integer pageNum, @PathVariable Integer pageSize) {
-        Page<TagDO> pages = tagService.listTag(pageNum, pageSize);
+    public Result page(@PathVariable Integer pageNum, @PathVariable Integer pageSize) {
+        Page<TagDO> pages = tagService.page(pageNum, pageSize);
         return Result.ok("成功获得标签分页信息", pages);
     }
 
     @SaCheckRole("admin")
     @PostMapping("/tag")
-    private Result addTag(@RequestBody TagDO tagDO) {
+    public Result add(@RequestBody TagDO tagDO) {
         tagService.save(tagDO);
         Long newId = tagDO.getId();
         return Result.ok("成功添加标签", newId);
@@ -33,20 +33,20 @@ public class AdminTagController {
 
     @SaCheckRole("admin")
     @PutMapping("/tag")
-    private Result updateTag(@RequestBody TagDO tagDO) {
+    public Result update(@RequestBody TagDO tagDO) {
         tagService.updateById(tagDO);
         return Result.ok("成功修改标签", tagDO.getId());
     }
 
     @SaCheckRole("admin")
     @DeleteMapping("/tag/{id}")
-    private Result deleteTag(@PathVariable("id") Long id) {
+    public Result deleteById(@PathVariable("id") Long id) {
         tagService.removeById(id);
         return Result.ok("成功删除标签", id);
     }
 
     @GetMapping("/tag/{id}")
-    private Result getCategoryById(@PathVariable("id") Long id) {
+    public Result getById(@PathVariable("id") Long id) {
         TagDO tag = tagService.getById(id);
         if (tag == null) {
             return Result.fail("查询标签失败");

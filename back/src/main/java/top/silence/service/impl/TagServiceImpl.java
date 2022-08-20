@@ -19,7 +19,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, TagDO> implements Tag
     private TagMapper tagMapper;
 
     @Override
-    public Page<TagDO> listTag(Integer pageNum, Integer pageSize) {
+    public Page<TagDO> page(Integer pageNum, Integer pageSize) {
         Page<TagDO> page = new Page<>(pageNum, pageSize);
         return tagMapper.selectPage(page, null);
     }

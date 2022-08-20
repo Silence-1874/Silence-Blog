@@ -22,7 +22,7 @@ public interface BlogMapper extends BaseMapper<BlogDO> {
      * @date 2022/5/17 19:39
      */
     @Select("SELECT * FROM blog RIGHT JOIN blog_tag ON blog.id = blog_tag.blog_id RIGHT JOIN tag ON tag.id = blog_tag.tag_id WHERE tag.id = #{tagId} ORDER BY is_top DESC, create_time DESC, update_time DESC")
-    List<BlogDO> pageList(Page<BlogDO> page, @Param("tagId") Long tagId);
+    List<BlogDO> pageByTag(Page<BlogDO> page, @Param("tagId") Long tagId);
 
     /**
      * 统计当前标签下的文章总数

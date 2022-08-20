@@ -18,17 +18,17 @@ public class VisitorController {
     private VisitorService visitorService;
 
     @PutMapping("/visitor/pv/{ip}/{city}")
-    public Result listVisitor(@PathVariable("ip") String ip, @PathVariable("city") String city) {
+    public Result updatePvByIp(@PathVariable("ip") String ip, @PathVariable("city") String city) {
         // 根据ip获得city是在前端的接口完成的，所以这里一并带上city
-        visitorService.updatePV(ip, city);
+        visitorService.updatePvByIp(ip, city);
         return Result.ok("成功更新pv");
     }
 
     @GetMapping("/visitor/pvuv")
-    public Result getPVAndUV() {
+    public Result getPvAndUv() {
         Map<String, Object> map = new HashMap<>(2);
-        map.put("pv", visitorService.getPV());
-        map.put("uv", visitorService.getUV());
+        map.put("pv", visitorService.getPv());
+        map.put("uv", visitorService.getUv());
         return Result.ok("成功获得pv和uv", map);
     }
 }

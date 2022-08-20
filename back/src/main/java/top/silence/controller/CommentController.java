@@ -15,16 +15,16 @@ import java.util.Map;
 public class CommentController {
 
     @Autowired
-    CommentService commentService;
+    private CommentService commentService;
 
     @GetMapping("/comment/{blogId}/{pageNum}/{pageSize}")
-    public Result listComment(@PathVariable("blogId") Long blogId, @PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize) {
-        Map<String, Object> map = commentService.listPage(blogId, pageNum, pageSize);
+    public Result pageByBlogId(@PathVariable("blogId") Long blogId, @PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize) {
+        Map<String, Object> map = commentService.pageByBlogId(blogId, pageNum, pageSize);
         return Result.ok("成功获得评论列表", map);
     }
 
     @PostMapping("/comment")
-    public Result submit(@RequestBody CommentDO comment) {
+    public Result add(@RequestBody CommentDO comment) {
         // 评论内容合法性校验
         if (StrUtil.isBlank(comment.getContent()) || comment.getContent().length() > 250 ||
                 comment.getBlogId() == null || comment.getParentCommentId() == null) {
@@ -38,7 +38,7 @@ public class CommentController {
                 return Result.fail("请输入正确的QQ号！");
             }
         }
-        commentService.addComment(comment);
+        commentService.add(comment);
         return Result.ok("评论成功", comment.getQq());
     }
 

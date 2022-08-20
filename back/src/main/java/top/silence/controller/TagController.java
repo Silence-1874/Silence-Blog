@@ -15,10 +15,10 @@ import java.util.List;
 public class TagController {
 
     @Autowired
-    TagService tagService;
+    private TagService tagService;
 
     @GetMapping("/tag")
-    public Result listTag() {
+    public Result list() {
         List<TagDO> list = tagService.list();
         return Result.ok("成功获得标签列表", list);
     }

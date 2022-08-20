@@ -15,6 +15,6 @@ public interface TagService extends IService<TagDO> {
      * @author Silence
      * @date 2022/5/12 20:00
      */
-    Page<TagDO> listTag(Integer pageNum, Integer pageSize);
+    Page<TagDO> page(Integer pageNum, Integer pageSize);
 
 }

@@ -27,7 +27,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentDO> im
     private CommentMapper commentMapper;
 
     @Override
-    public Page<CommentDO> searchComment(Integer pageNum, Integer pageSize, Long blogId) {
+    public Page<CommentDO> pageByQuery(Integer pageNum, Integer pageSize, Long blogId) {
         Page<CommentDO> page = new Page<>(pageNum, pageSize);
         QueryWrapper<CommentDO> queryWrapper= new QueryWrapper<>();
         if (blogId != null) {
@@ -38,7 +38,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentDO> im
     }
 
     @Override
-    public void deleteComment(Long id) {
+    public void deleteById(Long id) {
         CommentDO comment = commentMapper.selectById(id);
         Map<String, Object> map = new HashMap<>();
         map.put("parent_comment_id", comment.getId());
@@ -50,13 +50,13 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentDO> im
         }
         // 递归删除评论的回复
         for (CommentDO reply : replys) {
-            deleteComment(reply.getId());
+            deleteById(reply.getId());
         }
         commentMapper.deleteById(id);
     }
 
     @Override
-    public Map listPage(Long blogId, Integer pageNum, Integer pageSize) {
+    public Map pageByBlogId(Long blogId, Integer pageNum, Integer pageSize) {
         Map<String, Object> map = new HashMap<>();
         Page<CommentDO> page = new Page<>(pageNum, pageSize);
         QueryWrapper<CommentDO> queryWrapper= new QueryWrapper<>();
@@ -64,12 +64,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentDO> im
         queryWrapper.eq("parent_comment_id", -1);
         queryWrapper.orderByDesc("create_time");
         Page<CommentDO> pageList = commentMapper.selectPage(page, queryWrapper);
-        List<CommentDTO> comments = commentDO2DTO(pageList.getRecords());
+        List<CommentDTO> comments = transferDo2Dto(pageList.getRecords());
         map.put("allComment",pageList.getTotal());
         map.put("totalPage", pageList.getPages());
         // 查询某个根评论下的所有回复，包括非直接回复，将他们全都挂在根评论的ReplyComments下
         for (CommentDTO comment: comments) {
-            List<CommentDTO> reply = getAllReplys(comment);
+            List<CommentDTO> reply = listReplies(comment);
             comment.setReplyComments(reply);
         }
         map.put("comments",comments);
@@ -77,7 +77,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentDO> im
     }
 
     @Override
-    public List<CommentDTO> getAllReplys(CommentDTO root) {
+    public List<CommentDTO> listReplies(CommentDTO root) {
         List<CommentDTO> ret = new ArrayList<>();
         dfs(ret, root);
         // 回复按时间升序
@@ -96,7 +96,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentDO> im
     }
 
     @Override
-    public void addComment(CommentDO comment) {
+    public void add(CommentDO comment) {
         // 生成评论时间
         comment.setCreateTime(new Date());
 
@@ -124,7 +124,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentDO> im
     }
 
     @Override
-    public List<CommentDTO> commentDO2DTO(List<CommentDO> commentDOList) {
+    public List<CommentDTO> transferDo2Dto(List<CommentDO> commentDOList) {
         List<CommentDTO> comments = new ArrayList<>();
         for (CommentDO comment : commentDOList) {
             Long id = comment.getId();
@@ -141,7 +141,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentDO> im
             List<CommentDO> replys = commentMapper.selectByMap(map);
             if (replys != null && replys.size() != 0) {
                 // 递归将回复列表转换成DTO
-                commentDTO.setReplyComments(commentDO2DTO(replys));
+                commentDTO.setReplyComments(transferDo2Dto(replys));
             }
             comments.add(commentDTO);
         }

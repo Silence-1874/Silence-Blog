@@ -15,6 +15,6 @@ public interface CategoryService extends IService<CategoryDO> {
      * @author Silence
      * @date 2022/5/12 15:17
      */
-    Page<CategoryDO> listCategory(Integer pageNum, Integer pageSize);
+    Page<CategoryDO> page(Integer pageNum, Integer pageSize);
 
 }

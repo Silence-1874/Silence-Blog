@@ -15,10 +15,10 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @GetMapping("/category")
-    public Result listCategory() {
+    public Result list() {
         List<CategoryDO> list = categoryService.list();
         return Result.ok("成功获得分类列表", list);
     }
