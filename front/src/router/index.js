@@ -99,7 +99,16 @@ const routes = [
         name: 'adminVisitorLog',
         component: () => import('@/admin/VisitorLog'),
         meta: {
-          title: '访问日志',
+          title: '访客日志',
+          requireAuth: true
+        }
+      },
+      {
+        path: 'browserLog',
+        name: 'adminBrowserLog',
+        component: () => import('@/admin/BrowserLog'),
+        meta: {
+          title: '浏览日志',
           requireAuth: true
         }
       },

@@ -112,8 +112,13 @@
                         children: [
                             {
                                 id: 41,
-                                title: '访问日志',
+                                title: '访客日志',
                                 path: '/admin/visitorLog'
+                            },
+                            {
+                                id: 42,
+                                title: '浏览日志',
+                                path: '/admin/browserLog'
                             }
                         ]
                     },
@@ -131,11 +136,12 @@
                     '21': 'el-icon-view',
                     '31': 'el-icon-user',
                     '41': 'el-icon-alarm-clock',
+                    '42': 'el-icon-time',
                 },
                 //是否折叠
                 isCollapse: false,
                 //默认打开的菜单
-                defaultOpeneds: ['1', '2', '3', '4'],
+                defaultOpeneds: ['1', '2', '4'],
             }
         },
         methods: {},
