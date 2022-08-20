@@ -45,14 +45,4 @@ public class AdminTagController {
         return Result.ok("成功删除标签", id);
     }
 
-    @GetMapping("/tag/{id}")
-    public Result getById(@PathVariable("id") Long id) {
-        TagDO tag = tagService.getById(id);
-        if (tag == null) {
-            return Result.fail("查询标签失败");
-        } else {
-            return Result.ok("成功获得标签", tag);
-        }
-    }
-
 }
