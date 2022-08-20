@@ -13,7 +13,7 @@ import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
-public class BlogCotroller {
+public class BlogController {
 
     @Autowired
     private BlogService blogService;
