@@ -1,7 +1,7 @@
 package top.silence.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.silence.dto.VisitorDO;
+import top.silence.entity.VisitorDO;
 
 /**
  * @author Silence

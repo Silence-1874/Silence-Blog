@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.silence.dto.VisitorDO;
+import top.silence.entity.VisitorDO;
 import top.silence.mapper.VisitorMapper;
 import top.silence.service.VisitorService;
 

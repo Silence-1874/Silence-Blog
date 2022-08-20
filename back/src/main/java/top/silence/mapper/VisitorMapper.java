@@ -2,7 +2,7 @@ package top.silence.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import top.silence.dto.VisitorDO;
+import top.silence.entity.VisitorDO;
 
 /**
  * @author Silence

@@ -1,4 +1,4 @@
-package top.silence.dto;
+package top.silence.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import top.silence.dto.Result;
-import top.silence.dto.VisitorDO;
+import top.silence.entity.VisitorDO;
 import top.silence.service.VisitorService;
 
 @SaCheckLogin
