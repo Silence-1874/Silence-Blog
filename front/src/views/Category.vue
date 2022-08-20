@@ -10,6 +10,8 @@
 <script>
     import BlogList from "@/components/BlogList";
     import {marked} from "marked";
+    import {API_BLOG} from "@/api/blog";
+    import {API_CATEGORY} from "@/api/category";
 
     export default {
         name: "Category",
@@ -45,12 +47,12 @@
                 await this.getBlogList(1);
             },
             async getIdByName() {
-                await this.$axios.get("categoryName/" + this.$route.params.name).then(res => {
+                await API_CATEGORY.getByName(this.$route.params.name).then(res => {
                     this.categoryId = res.data.data.id;
                 })
             },
             async getBlogList(pageNum) {
-                await this.$axios.get("blog?pageNum=" + pageNum + "&pageSize=5" + "&categoryId=" + this.categoryId).then(res => {
+                await API_BLOG.page(pageNum, this.categoryId).then(res => {
                     const blogList = res.data.data;
                     if (blogList === null || blogList.length === 0) {
                         this.totalPage = 0;

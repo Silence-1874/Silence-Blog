@@ -85,6 +85,8 @@
 </template>
 
 <script>
+    import {API_TAG} from "@/api/tag";
+
     export default {
         name: "TagList",
         data() {
@@ -126,7 +128,7 @@
         },
         methods: {
             getData() {
-                this.$axios.get("/admin/tag/" + this.queryInfo.pageNum + "/" + this.queryInfo.pageSize).then(res => {
+                API_TAG.page(this.queryInfo.pageNum, this.queryInfo.pageSize).then(res => {
                     this.tagList = res.data.data.records;
                     this.total = res.data.data.total;
                 })
@@ -145,7 +147,7 @@
             addTag() {
                 this.$refs.addFormRef.validate(valid => {
                     if (valid) {
-                        this.$axios.post("/admin/tag", this.addForm).then(res => {
+                        API_TAG.add(this.addForm).then(res => {
                             if (res.data.isSuccess) {
                                 this.msgSuccess(res.data.msg);
                                 this.addDialogVisible = false;
@@ -159,7 +161,7 @@
             editTag() {
                 this.$refs.editFormRef.validate(valid => {
                     if (valid) {
-                        this.$axios.put("/admin/tag", this.editForm).then(res => {
+                        API_TAG.update(this.editForm).then(res => {
                             if (res.data.isSuccess) {
                                 this.msgSuccess(res.data.msg);
                                 this.editDialogVisible = false;
@@ -176,7 +178,7 @@
             },
 
             deleteTagById(id) {
-                this.$axios.delete("/admin/tag/" + id).then(res => {
+                API_TAG.deleteById(id).then(res => {
                     if (res.data.isSuccess) {
                         this.msgSuccess(res.data.msg);
                         this.getData();

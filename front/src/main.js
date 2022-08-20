@@ -5,7 +5,6 @@ import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'semantic-ui-css/semantic.min.css'
-import axios from 'axios'
 import './axios.js'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
@@ -16,12 +15,11 @@ import './permission'
 import 'highlight.js/styles/github.css'
 import 'github-markdown-css/github-markdown-light.css'
 import './css/github-mardown.css'
+import {API_VISITOR} from "@/api/visitor";
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(mavonEditor)
-
-Vue.prototype.$axios = axios
 
 // 每次路由更新时更新pv
 router.afterEach((to, from, next) => {
@@ -29,7 +27,7 @@ router.afterEach((to, from, next) => {
   if (localStorage.getItem("userInfo") !== 'admin') {
     const ip = returnCitySN['cip'];
     const city = returnCitySN['cname'];
-    axios.put("/visitor/pv/" + ip + "/" + city);
+    API_VISITOR.updateByIp(ip, city);
   }
 })
 

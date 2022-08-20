@@ -48,6 +48,9 @@
 </template>
 
 <script>
+    import {API_BLOG} from "@/api/blog";
+    import {API_CATEGORY} from "@/api/category";
+
     export default {
         name: "BlogEdit",
         data() {
@@ -77,26 +80,26 @@
         },
         methods: {
             getData() {
-                this.$axios.get("/admin/category_tag").then(res => {
+                API_BLOG.getCategoryAndTag().then(res => {
                     this.categoryList = res.data.data.categoryList;
                     this.tagList = res.data.data.tagList;
                 })
             },
 
             getCategoryById(id) {
-                this.$axios.get("/admin/category/" + id).then(res => {
+                API_CATEGORY.getById(id).then(res => {
                     this.form.category = res.data.data.id;
                 })
             },
 
             getTagListById(id) {
-                this.$axios.get("/admin/blogTag/" + id).then(res => {
+                API_BLOG.listTagIdByBlogId(id).then(res => {
                     this.form.tagList = res.data.data;
                 })
             },
 
             getBlog(id) {
-                this.$axios.get("/admin/blog/" + id).then(res => {
+                API_BLOG.getById(id).then(res => {
                     const dto = res.data.data;
                     this.form.title = dto.title;
                     this.form.description = dto.description;
@@ -142,7 +145,7 @@
 
                 this.$refs.formRef.validate(valid => {
                     if (valid) {
-                        this.$axios.post("/admin/blog", formDTO).then(res => {
+                        API_BLOG.add(formDTO).then(res => {
                             if (res.data.isSuccess) {
                                 this.msgSuccess(res.data.msg);
                                 this.$router.push('/admin/article')
@@ -167,7 +170,7 @@
                 this.$refs.formRef.validate(valid => {
                     if (valid) {
                         const blogId = this.$route.params.blogId;
-                        this.$axios.put("/admin/blog/" + blogId, formDTO).then(res => {
+                        API_BLOG.updateById(blogId, formDTO).then(res => {
                             if (res.data.isSuccess) {
                                 this.msgSuccess(res.data.msg);
                                 this.$router.push('/admin/article')

@@ -8,6 +8,7 @@
 	import BlogList from "@/components/BlogList";
 	import {marked} from "marked";
 	import hljs from "highlight.js";
+	import {API_BLOG} from "@/api/blog";
 
 	export default {
 		name: "Home",
@@ -41,7 +42,7 @@
 		methods: {
 			// 获得博客列表
 			getBlogList(pageNum) {
-				this.$axios.get("blog?pageNum=" + pageNum + "&pageSize=5").then(res => {
+				API_BLOG.page(pageNum, null).then(res => {
 					const blogList = res.data.data;
 					if (blogList === null || blogList.length === 0) {
 						this.totalPage = 0;

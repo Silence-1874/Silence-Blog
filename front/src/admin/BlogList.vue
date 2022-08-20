@@ -67,6 +67,9 @@
 </template>
 
 <script>
+    import {API_BLOG} from "@/api/blog";
+    import {API_CATEGORY} from "@/api/category";
+
     export default {
         name: "BlogList",
         data() {
@@ -95,26 +98,18 @@
 
             // 获取当前分页的博客
             getData() {
-                const info = this.queryInfo;
-                this.$axios.get(
-                    "/admin/blog?"
-                    + "pageNum=" + info.pageNum
-                    + "&pageSize=" + info.pageSize
-                    + "&categoryId=" + info.categoryId
-                    + "&title=" + info.title
-                ).then (res =>{
+                API_BLOG.pageByQuery(this.queryInfo).then (res =>{
                     this.blogList = res.data.data.records;
                     this.total = res.data.data.total;
                 });
-                this.$axios.get("/admin/category").then(res => {
+                API_CATEGORY.list().then(res => {
                     this.categoryList = res.data.data;
                 })
             },
 
             // 切换置顶状态
             switchTop(row) {
-                this.$axios.put("/admin/blog/top/" + row.id).then(res => {
-                })
+                API_BLOG.switchTopById(row.id);
             },
 
             // 跳转到博客编辑页
@@ -124,7 +119,7 @@
 
             // 通过博客id删除博客
             deleteBlogById(blogId) {
-                this.$axios.delete("/admin/blog/" + blogId).then(res => {
+                API_BLOG.deleteById(blogId).then(res => {
                     if (res.data.isSuccess) {
                         this.msgSuccess(res.data.msg);
                         this.getData();

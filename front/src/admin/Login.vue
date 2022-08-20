@@ -51,6 +51,8 @@
 </template>
 
 <script>
+    import {API_LOGIN} from "@/api/login";
+
     export default {
         name: 'Login',
         data() {
@@ -86,7 +88,7 @@
                 this.$store.commit("REMOVE_INFO");
                 this.$refs.loginForm.validate(valid => {
                     if (valid) {
-                        this.$axios.post("/login", this.loginForm).then(res => {
+                        API_LOGIN.login(this.loginForm).then(res => {
                             if (res.data.isSuccess) {
                                 this.$store.commit("SET_TOKEN_NAME", res.data.data.tokenName);
                                 this.$store.commit("SET_TOKEN_VALUE", res.data.data.tokenValue);

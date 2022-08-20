@@ -69,6 +69,8 @@
 </template>
 
 <script>
+    import {API_CATEGORY} from "@/api/category";
+
     export default {
         name: "CategoryList",
         data() {
@@ -98,7 +100,7 @@
         },
         methods: {
             getData() {
-                this.$axios.get("/admin/category/" + this.queryInfo.pageNum + "/" + this.queryInfo.pageSize).then(res => {
+                API_CATEGORY.page(this.queryInfo.pageNum, this.queryInfo.pageSize).then(res => {
                     this.categoryList = res.data.data.records;
                     this.total = res.data.data.total;
                 })
@@ -115,7 +117,7 @@
             addCategory() {
                 this.$refs.addFormRef.validate(valid => {
                     if (valid) {
-                        this.$axios.post("/admin/category", this.addForm).then(res => {
+                        API_CATEGORY.add(this.addForm).then(res => {
                             if (res.data.isSuccess) {
                                 this.msgSuccess(res.data.msg);
                                 this.addDialogVisible = false;
@@ -129,7 +131,7 @@
             editCategory() {
                 this.$refs.editFormRef.validate(valid => {
                     if (valid) {
-                        this.$axios.put("/admin/category", this.editForm).then(res => {
+                        API_CATEGORY.update(this.editForm).then(res => {
                             if (res.data.isSuccess) {
                                 this.msgSuccess(res.data.msg);
                                 this.editDialogVisible = false;
@@ -146,7 +148,7 @@
             },
 
             deleteCategoryById(id) {
-                this.$axios.delete("/admin/category/" + id).then(res => {
+                API_CATEGORY.deleteById(id).then(res => {
                     if (res.data.isSuccess) {
                         this.msgSuccess(res.data.msg);
                         this.getData();

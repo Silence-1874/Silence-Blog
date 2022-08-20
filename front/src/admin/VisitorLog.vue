@@ -24,6 +24,8 @@
 </template>
 
 <script>
+    import {API_VISITOR} from "@/api/visitor";
+
     export default {
         name: "VisitorLog",
         data() {
@@ -41,7 +43,7 @@
         },
         methods: {
             getData() {
-                this.$axios.get("/admin/visitor/" + this.queryInfo.pageNum + "/" + this.queryInfo.pageSize).then(res => {
+                API_VISITOR.page(this.queryInfo.pageNum, this.queryInfo.pageSize).then(res => {
                     this.visitorList = res.data.data.records;
                     this.total = res.data.data.total;
                 })

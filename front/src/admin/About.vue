@@ -17,6 +17,8 @@
 </template>
 
 <script>
+    import {API_ABOUT} from "@/api/about";
+
     export default {
         name: "About",
         data() {
@@ -36,7 +38,7 @@
         },
         methods: {
             getData() {
-                this.$axios.get("/admin/about").then(res => {
+                API_ABOUT.get().then(res => {
                     this.form.title = res.data.data.title;
                     this.form.content = res.data.data.content;
                 });
@@ -44,7 +46,7 @@
             submit() {
                 this.$refs.formRef.validate(valid => {
                     if (valid) {
-                        this.$axios.put("/admin/about", this.form).then(res => {
+                        API_ABOUT.update(this.form).then(res => {
                             if (res.data.isSuccess) {
                                 return this.msgSuccess(res.data.msg);
                             }

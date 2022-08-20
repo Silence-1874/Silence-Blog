@@ -52,6 +52,8 @@
     import Tags from "@/components/Tags";
     import Tocbot from "@/components/Tocbot";
     import SiteInfo from "@/components/SiteInfo";
+    import {API_CATEGORY} from "@/api/category";
+    import {API_TAG} from "@/api/tag";
 
     export default {
         name: "Index",
@@ -81,11 +83,11 @@
         methods: {
             getSite() {
                 // 获得分类列表
-                this.$axios.get("/category").then(res => {
+                API_CATEGORY.list().then(res => {
                     this.categoryList = res.data.data;
                 })
                 // 获得标签列表
-                this.$axios.get("/tag").then(res => {
+                API_TAG.list().then(res => {
                     this.tagList = res.data.data;
                 })
             },

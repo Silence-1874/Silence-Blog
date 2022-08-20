@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
 
 Vue.use(Vuex)
 
 import {Message, Notification} from "element-ui";
 import paopaoMapper from '@/paopaoMapper.json'
 import sanitizeHtml from 'sanitize-html'
+import {API_COMMENT} from "@/api/comment";
 
 export default new Vuex.Store({
   state: {
@@ -113,7 +113,7 @@ export default new Vuex.Store({
 
       const query = this.state.commentQuery;
       // actions里可以直接使用axios
-      axios.get("comment/" + query.blogId + "/" + query.pageNum + "/" + query.pageSize).then(res => {
+      API_COMMENT.pageByBlogId(query).then(res => {
         if (res.data.isSuccess) {
           let sanitizeHtmlConfig = {
             allowedTags: [],
@@ -163,7 +163,7 @@ export default new Vuex.Store({
       } else {
         // 否则，在后端通过QQ号获得名称和头像
       }
-      axios.post("/comment", form).then(res => {
+      API_COMMENT.add(form).then(res => {
         if (res.data.isSuccess) {
           Notification({
             title: res.data.msg,

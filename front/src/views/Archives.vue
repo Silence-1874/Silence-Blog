@@ -29,6 +29,9 @@
 </template>
 
 <script>
+    import {API_BLOG} from "@/api/blog";
+    import {API_ARCHIVE} from "@/api/archive";
+
     export default {
         name: "Archives",
         data() {
@@ -50,14 +53,14 @@
         },
         methods: {
             getArchives() {
-                this.$axios.get("/archives").then(res => {
+                API_ARCHIVE.archive().then(res => {
                     var list = Object.entries(res.data.data);
                     list.sort((a, b) => b[0].localeCompare(a[0]))
                     this.blogMap = list;
                 })
             },
             getCount() {
-                this.$axios.get("/countBlog").then(res => {
+                API_BLOG.count().then(res => {
                     this.count = res.data.data;
                 })
             },

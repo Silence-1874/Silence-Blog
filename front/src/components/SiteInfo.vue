@@ -32,6 +32,7 @@
 
 <script>
     import moment from "moment";
+    import {API_VISITOR} from "@/api/visitor";
 
     export default {
         name: "SiteInfo",
@@ -62,7 +63,7 @@
         },
         methods: {
             getPVAndUV() {
-                this.$axios.get("/visitor/pvuv").then(res => {
+                API_VISITOR.getPvAndUv().then(res => {
                     this.pv = res.data.data.pv;
                     this.uv = res.data.data.uv;
                 })

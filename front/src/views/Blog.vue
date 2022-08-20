@@ -66,6 +66,7 @@
     import {marked} from "marked";
     import hljs from "highlight.js";
     import CommentList from "@/components/CommentList";
+    import {API_BLOG} from "@/api/blog";
 
     export default {
         name: "Blog",
@@ -129,13 +130,13 @@
         created() {
             // 每次组件创建时当前文章浏览量加1，博主本人不贡献浏览量
             if (localStorage.getItem("userInfo") !== 'admin') {
-                this.$axios.get("/blogView/" + this.blogId);
+                API_BLOG.increaseViewById(this.blogId);
             }
             this.getBlog();
         },
         methods: {
             getBlog() {
-                this.$axios.get("blog/" + this.blogId).then(res => {
+                API_BLOG.getDtoById(this.blogId).then(res => {
                     this.blog = res.data.data;
                     // markdown渲染
                     var content = marked.parse(this.blog.content);

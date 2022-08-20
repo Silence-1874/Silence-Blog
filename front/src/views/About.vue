@@ -15,6 +15,7 @@
     import {marked} from "marked";
     import hljs from "highlight.js";
     import CommentList from "@/components/CommentList";
+    import {API_ABOUT} from "@/api/about";
 
     export default {
         name: 'About',
@@ -47,10 +48,10 @@
         },
         methods: {
             getData() {
-                this.$axios.get("/about").then(res => {
+                API_ABOUT.get().then(res => {
                     this.title = res.data.data.title;
                     this.content = marked.parse(res.data.data.content);
-                })
+                });
             }
         }
     }

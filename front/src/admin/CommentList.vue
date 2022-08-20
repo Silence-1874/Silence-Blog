@@ -78,6 +78,9 @@
 </template>
 
 <script>
+    import {API_BLOG} from "@/api/blog";
+    import {API_COMMENT} from "@/api/comment";
+
     export default {
         name: "CommentList",
         data() {
@@ -113,20 +116,14 @@
         },
         methods: {
             getCommentList() {
-                const info = this.queryInfo;
-                this.$axios.get(
-                    "/admin/comment?"
-                    + "pageNum=" + info.pageNum
-                    + "&pageSize=" + info.pageSize
-                    + "&blogId=" + info.blogId
-                ).then (res =>{
+                API_COMMENT.pageByQuery(this.queryInfo).then(res =>{
                     this.commentList = res.data.data.records;
                     this.total = res.data.data.total;
                 });
             },
 
             getBlogList() {
-                this.$axios.get("/admin/blog/all").then(res => {
+                API_BLOG.list().then(res => {
                     this.blogList = res.data.data;
                     this.blogList.unshift({id: 0, title: '关于我'})
                 })
@@ -147,14 +144,14 @@
             },
 
             deleteCommentById(id) {
-                this.$axios.delete('/admin/comment/' + id).then(res => {
+                API_COMMENT.deleteById(id).then(res => {
                     this.msgSuccess(res.data.msg);
                     this.getCommentList();
                 })
             },
 
             updateComment() {
-                this.$axios.put('/admin/comment', this.editForm).then(res => {
+                API_COMMENT.update(this.editForm).then(res => {
                     this.msgSuccess(res.data.msg);
                     this.editDialogVisible = false;
                     this.getCommentList();
