@@ -26,7 +26,7 @@
                 <el-row :gutter="24" class="footer-title">
                     <el-col :span="24" style="color: #f65066">
                         <br>邮箱<br><br>
-                        silence1874@qq.com
+                        silence1874@foxmail.com
                     </el-col>
                 </el-row>
             </el-col>
