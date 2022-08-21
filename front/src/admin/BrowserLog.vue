@@ -3,10 +3,10 @@
         <el-table :data="browserList" row-key="id"
                   :header-cell-style="{background:'#eef1f6',color:'#606266'}"
                   stripe border style="margin-bottom: 15px; margin-top: 15px">
-            <el-table-column label="序号" width="80" type="index" align="center"></el-table-column>
+            <el-table-column label="序号" width="60" type="index" align="center"></el-table-column>
             <el-table-column label="IP" prop="ip" align="center" width="140px"></el-table-column>
             <el-table-column label="浏览页面" prop="page" align="center"></el-table-column>
-            <el-table-column label="请求URL" prop="url" width="350px" align="center"></el-table-column>
+            <el-table-column label="请求URL" prop="url" width="470px" align="center"></el-table-column>
             <el-table-column label="浏览时间" width="200" align="center">
                 <template v-slot="scope">{{ scope.row.time | dateFormat }}</template>
             </el-table-column>
